@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://opjwrl17rrc8"]
+
+[ext_resource type="Script" uid="uid://3ywb6s4svyxg" path="res://scripts/loginscene.gd" id="1_jved0"]
+[ext_resource type="Texture2D" uid="uid://bo1xd8h1ipogi" path="res://assets/images/ICONS_USER.png" id="2_8t32u"]
+
+[node name="LoginScene" type="Control" unique_id=979751267]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jved0")
+
+[node name="Panel" type="Panel" parent="." unique_id=1964981508]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="Panel" unique_id=305529969]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.25
+offset_top = -15.5
+offset_right = 34.25
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Panel" unique_id=1842104655]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 134.0
+offset_top = -553.0
+offset_right = 164.0
+offset_bottom = -523.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HighScoreLabel" type="Label" parent="Panel" unique_id=199481131]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=12558744]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.5
+offset_top = -177.5
+offset_right = 66.5
+offset_bottom = -49.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8t32u")
+expand_mode = 3

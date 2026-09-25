@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://c7i23dxourni6"]
+
+[ext_resource type="Script" uid="uid://cqknv6vlo7313" path="res://scripts/bootscene.gd" id="1_j6d0a"]
+[ext_resource type="PackedScene" uid="uid://opjwrl17rrc8" path="res://scenes/LoginScene.tscn" id="2_11n6c"]
+[ext_resource type="Texture2D" uid="uid://byc6quyy4j048" path="res://assets/images/logo1.png" id="2_uxwki"]
+[ext_resource type="AudioStream" uid="uid://dq28pabqvdkqg" path="res://assets/audios/OPHD.ogg" id="3_11n6c"]
+[ext_resource type="AudioStream" uid="uid://dqy5bc2yjp2lp" path="res://assets/audios/OPHD2.ogg" id="4_xg3o2"]
+
+[node name="BootScene" type="Control" unique_id=1600299780]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j6d0a")
+loginscene = ExtResource("2_11n6c")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=912257380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=423076114]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer" unique_id=969282788]
+layout_mode = 2
+text = "[color=#a8a8a8]BIOS Free v1.04 Release 6.0[/color]
+[color=#707070]Copyright 1985-1998 FreeOS Technologies Ltd.
+All Rights Reserved
+Copyright 1996-1998 Intel Corporation.[/color]
+[color=#4a4a4a]4S4EB2X0.10A.0026.P08[/color]
+
+[color=#ffffff]BrokenDev Dimension XPS T500[/color]
+[color=#a8a8a8]BIOS Version A07 (Adware Edition)[/color]
+[color=#a8a8a8]Intel(R) Celeron(R) II processor 333 MHz[/color]
+[color=#00ff00]64MB System RAM Passed[/color]
+
+[color=#ffffff]Keyboard ........... [/color][color=#00ff00]Detected[/color]
+[color=#ffffff]Mouse .............. [/color][color=#00ff00]Detected[/color]
+
+[color=#a8a8a8]Fixed Disk 0: WDC WD400BB-23JHA1-(PM)[/color]
+[color=#a8a8a8]ATAPI CD-ROM: CRD-B480C-(SM)[/color]
+
+[color=#ff5555]WARNING: Unregistered OS detected. Loading Adware modules...[/color]
+[color=#ffaa00]SQL_CORE.SYS ................. [/color][color=#00ff00]Loaded[/color]
+[color=#ffaa00]POPUP_GENERATOR.EXE .......... [/color][color=#00ff00]Active[/color]
+
+[color=#55ffff]Press <ANY KEY> to boot BIOS OS[/color]"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2141553686]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 325.0
+offset_right = 2560.0
+offset_bottom = 1450.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_uxwki")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=466875544]
+stream = ExtResource("3_11n6c")
+pitch_scale = 2.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1168680668]
+stream = ExtResource("4_xg3o2")
+volume_db = -10.0
+pitch_scale = 4.0
