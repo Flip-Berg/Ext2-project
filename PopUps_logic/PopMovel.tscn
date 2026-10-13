@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dp4k41vjkwsdm"]
+
+[ext_resource type="PackedScene" uid="uid://bo0n8pfhfmtoq" path="res://BasePop.tscn" id="1_xtm0n"]
+[ext_resource type="Script" uid="uid://bq65chdcrg0gk" path="res://pop_movel.gd" id="2_ohj3n"]
+
+[node name="PopMovel" unique_id=129022305 instance=ExtResource("1_xtm0n")]
+script = ExtResource("2_ohj3n")
+speed = 100.0

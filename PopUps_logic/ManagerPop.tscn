@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cpne21pgva434"]
+
+[node name="ManagerPop" type="CanvasLayer" unique_id=1945478739]
+
+[node name="Timer" type="Timer" parent="." unique_id=397385150]

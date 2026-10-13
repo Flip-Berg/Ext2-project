@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c5fnj6cf5rkcp"]
+
+[ext_resource type="PackedScene" uid="uid://bo0n8pfhfmtoq" path="res://BasePop.tscn" id="1_puxw0"]
+[ext_resource type="Script" uid="uid://dquw33ild56x3" path="res://pop_mitose.gd" id="2_dua4y"]
+
+[node name="PopMitose" unique_id=129022305 instance=ExtResource("1_puxw0")]
+script = ExtResource("2_dua4y")
