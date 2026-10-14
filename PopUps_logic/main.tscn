@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://ygngt7fnwpbv"]
 
+[ext_resource type="Texture2D" uid="uid://cyby4urpnjxkl" path="res://sprites/biOS UI.png" id="1_5vw27"]
 [ext_resource type="Script" uid="uid://b4j8hq1a8f11v" path="res://manager_pop.gd" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://bikkxhiyocwkv" path="res://PopEstatico.tscn" id="3_7mycd"]
 [ext_resource type="PackedScene" uid="uid://dp4k41vjkwsdm" path="res://PopMovel.tscn" id="4_272bh"]
@@ -9,6 +10,11 @@
 [ext_resource type="Script" uid="uid://6bmtgqt03i2m" path="res://hud.gd" id="7_272bh"]
 
 [node name="main" type="Node2D" unique_id=551109903]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=342040004]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_5vw27")
 
 [node name="ManagerPop" parent="." unique_id=1945478739 instance=ExtResource("5_7mycd")]
 script = ExtResource("2_lquwl")

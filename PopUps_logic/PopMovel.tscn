@@ -6,3 +6,4 @@
 [node name="PopMovel" unique_id=129022305 instance=ExtResource("1_xtm0n")]
 script = ExtResource("2_ohj3n")
 speed = 100.0
+bounce_offset = 100.0
