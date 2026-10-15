@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bikkxhiyocwkv"]
+
+[ext_resource type="PackedScene" uid="uid://bo0n8pfhfmtoq" path="res://BasePop.tscn" id="1_osycs"]
+[ext_resource type="Script" uid="uid://dns8o7karof3o" path="res://pop_estatico.gd" id="2_gwtao"]
+
+[node name="PopEstatico" unique_id=129022305 instance=ExtResource("1_osycs")]
+script = ExtResource("2_gwtao")
+
+[node name="TextureRect2" type="TextureRect" parent="." index="2" unique_id=902085015]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

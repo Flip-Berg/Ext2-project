@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bo0n8pfhfmtoq"]
+
+[ext_resource type="Script" uid="uid://2df1im13qq70" path="res://base_pop.gd" id="1_omiol"]
+[ext_resource type="Texture2D" uid="uid://b6fbm8l8pppxj" path="res://icone-carinha-vermelha.png" id="2_1680k"]
+[ext_resource type="Texture2D" uid="uid://d3xuxoqaw85gq" path="res://imagens/pop-up-comida-588x205.png" id="2_err63"]
+[ext_resource type="Texture2D" uid="uid://d3gv70i6m15o1" path="res://imagens/pop-up-homens_solteiros-588x205.png" id="3_cl47u"]
+[ext_resource type="Texture2D" uid="uid://cneyw5lpw7yuq" path="res://imagens/pop-up-seja_belo-588x205.png" id="4_iiojw"]
+[ext_resource type="Script" uid="uid://cndet4fwc0dd" path="res://botao.gd" id="4_uxmkj"]
+[ext_resource type="Texture2D" uid="uid://du4oyjr6sdrcd" path="res://imagens/pop-up-tarologa-588x205.png" id="5_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://bma8eoamhyv2y" path="res://grids/box-amarelo-620x243.png" id="6_err63"]
+[ext_resource type="Texture2D" uid="uid://d2kbb5mo1fe2p" path="res://grids/box-ciano-620x243.png" id="7_cl47u"]
+[ext_resource type="Texture2D" uid="uid://nbaie1v4wt31" path="res://grids/box-roxo-620x243.png" id="8_iiojw"]
+[ext_resource type="Texture2D" uid="uid://bs42jx040riun" path="res://grids/box-verde-620x243.png" id="9_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://bhdleaqk6gm0v" path="res://grids/box-vermelho-620x243.png" id="10_8v8dm"]
+[ext_resource type="Texture2D" uid="uid://c0yyu8umql55a" path="res://sprites/icone-carinha-verde.png" id="13_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://ckqxpa5hf1drh" path="res://sprites/icone-carinha-amarela.png" id="14_8v8dm"]
+
+[node name="BasePop" type="TextureRect" unique_id=129022305]
+offset_right = 620.0
+offset_bottom = 241.0
+script = ExtResource("1_omiol")
+popup_images = Array[Texture2D]([ExtResource("2_err63"), ExtResource("3_cl47u"), ExtResource("4_iiojw"), ExtResource("5_ipgwu")])
+popup_grid = Array[Texture2D]([ExtResource("6_err63"), ExtResource("7_cl47u"), ExtResource("8_iiojw"), ExtResource("9_ipgwu"), ExtResource("10_8v8dm")])
+
+[node name="RandomGrid" type="TextureRect" parent="." unique_id=997917453]
+layout_mode = 0
+offset_right = 620.0
+offset_bottom = 243.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RandomImage" type="TextureRect" parent="." unique_id=1719460392]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 29.0
+offset_right = 606.0
+offset_bottom = 234.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="RandomImage" unique_id=566999711]
+layout_mode = 0
+offset_left = 525.0
+offset_top = -29.0
+offset_right = 561.0
+offset_bottom = 8.0
+texture = ExtResource("14_8v8dm")
+
+[node name="TextureRect" type="TextureRect" parent="RandomImage" unique_id=814286444]
+layout_mode = 0
+offset_left = 488.0
+offset_top = -27.0
+offset_right = 524.0
+offset_bottom = 7.0
+texture = ExtResource("13_ipgwu")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=610301081]
+layout_mode = 0
+offset_left = 578.0
+offset_top = 3.0
+offset_right = 615.0
+offset_bottom = 39.0
+texture_normal = ExtResource("2_1680k")
+script = ExtResource("4_uxmkj")
