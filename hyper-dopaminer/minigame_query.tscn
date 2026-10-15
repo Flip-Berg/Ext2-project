@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dnwme4fh6qy43"]
+
+[ext_resource type="Script" uid="uid://df204t70brhua" path="res://minigame_query.gd" id="1_4pmlm"]
+
+[node name="Node2D" type="Control" unique_id=649769624]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_4pmlm")
+
+[node name="FundoFeedback" type="ColorRect" parent="." unique_id=799911467]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="Panel" type="Panel" parent="." unique_id=981669741]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 644.0
+
+[node name="BarraTempo" type="ProgressBar" parent="." unique_id=894013863]
+layout_mode = 0
+offset_right = 1149.0
+offset_bottom = 27.0
+show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1694489575]
+layout_mode = 0
+offset_left = 938.0
+offset_top = 395.0
+offset_right = 1149.0
+offset_bottom = 648.0
+text = "GLOSSÁRIO:
+
+SELECT: Busca dados
+
+FROM: De qual tabela
+
+WHERE: Condição (Onde)
+
+UPDATE: Atualizar dados
+
+INSERT INTO: Inserir dados"
+
+[node name="LabelPseudocodigo" type="Label" parent="." unique_id=610091091]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 92.0
+
+[node name="TextoObjetivo" type="Label" parent="." unique_id=1433850010]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 102.0
+offset_right = 360.0
+offset_bottom = 145.0
+
+[node name="EntradaJogador" type="LineEdit" parent="." unique_id=1949269435]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 327.0
+offset_right = 167.0
+offset_bottom = 358.0
