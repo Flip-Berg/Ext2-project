@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2foncdgjptme"
-path="res://.godot/imported/pop-up-azul.png-c32acd67bab62f46aba77bdac9d63111.ctex"
+path="res://.godot/imported/pop-up-azul.png-c41664f35a30438d39a12ca3a0570b66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pop-up-azul.png"
-dest_files=["res://.godot/imported/pop-up-azul.png-c32acd67bab62f46aba77bdac9d63111.ctex"]
+source_file="res://PopUps_logic/pop-up-azul.png"
+dest_files=["res://.godot/imported/pop-up-azul.png-c41664f35a30438d39a12ca3a0570b66.ctex"]
 
 [params]
 

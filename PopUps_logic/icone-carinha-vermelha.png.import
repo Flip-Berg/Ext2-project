@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b6fbm8l8pppxj"
-path="res://.godot/imported/icone-carinha-vermelha.png-65d2eff72134bf73f70663c858a55ccb.ctex"
+path="res://.godot/imported/icone-carinha-vermelha.png-5e4fc388e06d348f1faaf1ec48b684fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icone-carinha-vermelha.png"
-dest_files=["res://.godot/imported/icone-carinha-vermelha.png-65d2eff72134bf73f70663c858a55ccb.ctex"]
+source_file="res://PopUps_logic/icone-carinha-vermelha.png"
+dest_files=["res://.godot/imported/icone-carinha-vermelha.png-5e4fc388e06d348f1faaf1ec48b684fa.ctex"]
 
 [params]
 

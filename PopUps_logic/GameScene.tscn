@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bdyhkxah8gcum"]
+
+[ext_resource type="Texture2D" uid="uid://cyby4urpnjxkl" path="res://PopUps_logic/sprites/biOS UI.png" id="1_klbds"]
+[ext_resource type="PackedScene" uid="uid://cpne21pgva434" path="res://PopUps_logic/ManagerPop.tscn" id="2_ii616"]
+[ext_resource type="Script" uid="uid://b4j8hq1a8f11v" path="res://PopUps_logic/manager_pop.gd" id="3_v1b0s"]
+[ext_resource type="PackedScene" uid="uid://bikkxhiyocwkv" path="res://PopUps_logic/PopEstatico.tscn" id="4_pd3fg"]
+[ext_resource type="PackedScene" uid="uid://dp4k41vjkwsdm" path="res://PopUps_logic/PopMovel.tscn" id="5_6nid3"]
+[ext_resource type="PackedScene" uid="uid://c5fnj6cf5rkcp" path="res://PopUps_logic/PopMitose.tscn" id="6_ca47w"]
+[ext_resource type="Script" uid="uid://ckivevl72rm66" path="res://PopUps_logic/life_manager.gd" id="7_kbmgc"]
+[ext_resource type="Script" uid="uid://6bmtgqt03i2m" path="res://PopUps_logic/hud.gd" id="8_uhh3t"]
+[ext_resource type="PackedScene" uid="uid://dnwme4fh6qy43" path="res://hyper-dopaminer/minigame_query.tscn" id="9_ii616"]
+
+[node name="main" type="Node2D" unique_id=551109903]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=342040004]
+z_index = -1
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_klbds")
+
+[node name="ManagerPop" parent="." unique_id=1945478739 instance=ExtResource("2_ii616")]
+script = ExtResource("3_v1b0s")
+static_popup = ExtResource("4_pd3fg")
+moving_popup = ExtResource("5_6nid3")
+multiplier_popup = ExtResource("6_ca47w")
+
+[node name="SpawnTimer" type="Timer" parent="ManagerPop" unique_id=554814673]
+
+[node name="LifeManager" type="Node" parent="." unique_id=1416744984]
+script = ExtResource("7_kbmgc")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=310080760]
+script = ExtResource("8_uhh3t")
+
+[node name="LivesLabel" type="Label" parent="HUD" unique_id=561145719]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Node2D" parent="." unique_id=649769624 instance=ExtResource("9_ii616")]
+offset_left = 385.0
+offset_top = 218.0
+offset_right = 385.0
+offset_bottom = 218.0

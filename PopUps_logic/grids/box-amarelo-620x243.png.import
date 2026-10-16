@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bma8eoamhyv2y"
-path="res://.godot/imported/box-amarelo-620x243.png-ca4a75a52466e0171d1023130f2088b0.ctex"
+path="res://.godot/imported/box-amarelo-620x243.png-2f157252f9f6814e42f1b03217468823.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://grids/box-amarelo-620x243.png"
-dest_files=["res://.godot/imported/box-amarelo-620x243.png-ca4a75a52466e0171d1023130f2088b0.ctex"]
+source_file="res://PopUps_logic/grids/box-amarelo-620x243.png"
+dest_files=["res://.godot/imported/box-amarelo-620x243.png-2f157252f9f6814e42f1b03217468823.ctex"]
 
 [params]
 

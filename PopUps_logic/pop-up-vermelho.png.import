@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bok6vv2ro8rwq"
-path="res://.godot/imported/pop-up-vermelho.png-efcae99300e1bed8ac47922bd5b9ac29.ctex"
+path="res://.godot/imported/pop-up-vermelho.png-b84efb34349603e836df54d633ed42b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pop-up-vermelho.png"
-dest_files=["res://.godot/imported/pop-up-vermelho.png-efcae99300e1bed8ac47922bd5b9ac29.ctex"]
+source_file="res://PopUps_logic/pop-up-vermelho.png"
+dest_files=["res://.godot/imported/pop-up-vermelho.png-b84efb34349603e836df54d633ed42b2.ctex"]
 
 [params]
 

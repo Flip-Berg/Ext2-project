@@ -21,8 +21,8 @@ var banco_queries = [
 var query_atual = {}
 
 # 6. TIMER E DIFICULDADE
-var tempo_maximo = 10.0 # O jogador começa tendo 10 segundos para responder
-var tempo_restante = 10.0
+var tempo_maximo = 30.0 # O jogador começa tendo 10 segundos para responder
+var tempo_restante = 30.0
 var multiplicador_dificuldade = 1.0 # Vai aumentar para fazer o tempo passar mais rápido
 
 func _ready():
@@ -63,7 +63,7 @@ func _checar_resposta(texto_digitado):
 
 # 1. FEEDBACK VISUAL
 func _acertou():
-	multiplicador_dificuldade += 0.1 # Aumenta a dificuldade (tempo mais rápido!)
+	multiplicador_dificuldade = min(multiplicador_dificuldade + 0.05, 1.5) # Aumenta a dificuldade (tempo mais rápido!)
 	_piscar_tela(Color.GREEN)
 	nova_query()
 	

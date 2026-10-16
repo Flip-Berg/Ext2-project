@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://du4oyjr6sdrcd"
-path="res://.godot/imported/pop-up-tarologa-588x205.png-12b8e2274fd296a63b3d57a937912d7c.ctex"
+path="res://.godot/imported/pop-up-tarologa-588x205.png-6b78c14b80b69d47f994a3229b7b0276.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://imagens/pop-up-tarologa-588x205.png"
-dest_files=["res://.godot/imported/pop-up-tarologa-588x205.png-12b8e2274fd296a63b3d57a937912d7c.ctex"]
+source_file="res://PopUps_logic/imagens/pop-up-tarologa-588x205.png"
+dest_files=["res://.godot/imported/pop-up-tarologa-588x205.png-6b78c14b80b69d47f994a3229b7b0276.ctex"]
 
 [params]
 
