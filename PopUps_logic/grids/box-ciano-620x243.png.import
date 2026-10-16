@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2kbb5mo1fe2p"
-path="res://.godot/imported/box-ciano-620x243.png-b39d21c76160b0d0498dc92beeecea9c.ctex"
+path="res://.godot/imported/box-ciano-620x243.png-3fa2d0bb587a1961156998f2d8536779.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://grids/box-ciano-620x243.png"
-dest_files=["res://.godot/imported/box-ciano-620x243.png-b39d21c76160b0d0498dc92beeecea9c.ctex"]
+source_file="res://PopUps_logic/grids/box-ciano-620x243.png"
+dest_files=["res://.godot/imported/box-ciano-620x243.png-3fa2d0bb587a1961156998f2d8536779.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3gv70i6m15o1"
-path="res://.godot/imported/pop-up-homens_solteiros-588x205.png-4b25e9379630128469ef210a90bc474f.ctex"
+path="res://.godot/imported/pop-up-homens_solteiros-588x205.png-e28d4a5f2fe9d36075c60e493c40f69a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://imagens/pop-up-homens_solteiros-588x205.png"
-dest_files=["res://.godot/imported/pop-up-homens_solteiros-588x205.png-4b25e9379630128469ef210a90bc474f.ctex"]
+source_file="res://PopUps_logic/imagens/pop-up-homens_solteiros-588x205.png"
+dest_files=["res://.godot/imported/pop-up-homens_solteiros-588x205.png-e28d4a5f2fe9d36075c60e493c40f69a.ctex"]
 
 [params]
 

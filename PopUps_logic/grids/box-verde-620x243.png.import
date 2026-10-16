@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bs42jx040riun"
-path="res://.godot/imported/box-verde-620x243.png-5bfb2bc92de4a77f24a4b97747296d2a.ctex"
+path="res://.godot/imported/box-verde-620x243.png-be3cb7e2844823246774c03d9efacb07.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://grids/box-verde-620x243.png"
-dest_files=["res://.godot/imported/box-verde-620x243.png-5bfb2bc92de4a77f24a4b97747296d2a.ctex"]
+source_file="res://PopUps_logic/grids/box-verde-620x243.png"
+dest_files=["res://.godot/imported/box-verde-620x243.png-be3cb7e2844823246774c03d9efacb07.ctex"]
 
 [params]
 

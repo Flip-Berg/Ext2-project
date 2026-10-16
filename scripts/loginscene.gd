@@ -20,8 +20,6 @@ func _on_text_submitted(_new_text: String) -> void:
 	_on_login_pressed()
 
 func _on_login_pressed() -> void:
-	# Salva o nome informado pelo jogador
 	PlayerData.set_player_name(name_input.text)
 	
-	# Transição para a Área de Trabalho (DesktopMenu)
-	get_tree().change_scene_to_file("res://scenes/DesktopMenu.tscn")
+	SceneTransition.change_scene_to_file("res://PopUps_logic/GameScene.tscn",0.5)

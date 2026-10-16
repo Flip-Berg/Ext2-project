@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dnwme4fh6qy43"]
 
-[ext_resource type="Script" uid="uid://df204t70brhua" path="res://minigame_query.gd" id="1_4pmlm"]
+[ext_resource type="Script" uid="uid://df204t70brhua" path="res://hyper-dopaminer/minigame_query.gd" id="1_4pmlm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ii616"]
+bg_color = Color(0.09019608, 0.14509805, 0.21176471, 1)
 
 [node name="Node2D" type="Control" unique_id=649769624]
 layout_mode = 3
@@ -17,6 +20,7 @@ offset_bottom = 647.0
 layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 644.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ii616")
 
 [node name="BarraTempo" type="ProgressBar" parent="." unique_id=894013863]
 layout_mode = 0
@@ -26,10 +30,10 @@ show_percentage = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1694489575]
 layout_mode = 0
-offset_left = 938.0
-offset_top = 395.0
-offset_right = 1149.0
-offset_bottom = 648.0
+offset_left = 850.0
+offset_top = 100.0
+offset_right = 1130.0
+offset_bottom = 500.0
 text = "GLOSSÁRIO:
 
 SELECT: Busca dados
@@ -58,7 +62,7 @@ offset_bottom = 145.0
 
 [node name="EntradaJogador" type="LineEdit" parent="." unique_id=1949269435]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 327.0
-offset_right = 167.0
-offset_bottom = 358.0
+offset_left = 30.0
+offset_top = 180.0
+offset_right = 730.0
+offset_bottom = 225.0

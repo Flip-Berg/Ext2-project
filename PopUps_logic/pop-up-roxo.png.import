@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://45vcx5pvhdkt"
-path="res://.godot/imported/pop-up-roxo.png-8efa721f2b90675e48cfa43da10bf206.ctex"
+path="res://.godot/imported/pop-up-roxo.png-673cfebdb25c3a372e9c00ca4ff2514e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pop-up-roxo.png"
-dest_files=["res://.godot/imported/pop-up-roxo.png-8efa721f2b90675e48cfa43da10bf206.ctex"]
+source_file="res://PopUps_logic/pop-up-roxo.png"
+dest_files=["res://.godot/imported/pop-up-roxo.png-673cfebdb25c3a372e9c00ca4ff2514e.ctex"]
 
 [params]
 

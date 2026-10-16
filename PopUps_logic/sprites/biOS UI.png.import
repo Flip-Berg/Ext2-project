@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cyby4urpnjxkl"
-path="res://.godot/imported/biOS UI.png-5ec5860bed7192c6963809142a209e32.ctex"
+path="res://.godot/imported/biOS UI.png-e42964b31b1006e30652d6bd67dc3446.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/biOS UI.png"
-dest_files=["res://.godot/imported/biOS UI.png-5ec5860bed7192c6963809142a209e32.ctex"]
+source_file="res://PopUps_logic/sprites/biOS UI.png"
+dest_files=["res://.godot/imported/biOS UI.png-e42964b31b1006e30652d6bd67dc3446.ctex"]
 
 [params]
 
