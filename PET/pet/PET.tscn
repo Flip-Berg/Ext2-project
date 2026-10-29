@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://csa024myscaoq"]
+
+[ext_resource type="Script" uid="uid://cldyiklo7i6bu" path="res://PET/pet/pet.gd" id="1_jatmv"]
+[ext_resource type="Texture2D" uid="uid://vfyw63so83lq" path="res://PET/sprites/kiki_1.png" id="1_t6svn"]
+[ext_resource type="Texture2D" uid="uid://62cuowbe3xkq" path="res://PET/sprites/kiki_2_com_balao.png" id="2_2h66o"]
+[ext_resource type="Texture2D" uid="uid://dl1sofsok8kgg" path="res://PET/sprites/kiki_3_com_balao.png" id="3_jqbgo"]
+[ext_resource type="PackedScene" uid="uid://c4brux1e18y0h" path="res://PET/pet/food.tscn" id="5_2h66o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjo2h"]
+size = Vector2(326, 303)
+
+[node name="Pet" type="Node2D" unique_id=209653308]
+script = ExtResource("1_jatmv")
+sprite_sleeping = ExtResource("2_2h66o")
+sprite_awake = ExtResource("3_jqbgo")
+sprite_damage = ExtResource("1_t6svn")
+
+[node name="PetSprite" type="Sprite2D" parent="." unique_id=487522264]
+scale = Vector2(0.6442105, 0.54782605)
+texture = ExtResource("2_2h66o")
+
+[node name="FeedingZone" type="Area2D" parent="." unique_id=332534744]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeedingZone" unique_id=622270695]
+position = Vector2(-19, 6)
+shape = SubResource("RectangleShape2D_wjo2h")
+
+[node name="WakeTimer" type="Timer" parent="." unique_id=1555601239]
+
+[node name="FeedTimer" type="Timer" parent="." unique_id=635509931]
+
+[node name="DamageTimer" type="Timer" parent="." unique_id=1658706959]
+
+[node name="Food" parent="." unique_id=1432356105 instance=ExtResource("5_2h66o")]
+position = Vector2(177, 139)

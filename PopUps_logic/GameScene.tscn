@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bdyhkxah8gcum"]
 
 [ext_resource type="Texture2D" uid="uid://cyby4urpnjxkl" path="res://PopUps_logic/sprites/biOS UI.png" id="1_klbds"]
+[ext_resource type="Script" uid="uid://rhnsursuoa2c" path="res://PopUps_logic/game_scene.gd" id="1_pd3fg"]
 [ext_resource type="PackedScene" uid="uid://cpne21pgva434" path="res://PopUps_logic/ManagerPop.tscn" id="2_ii616"]
 [ext_resource type="Script" uid="uid://b4j8hq1a8f11v" path="res://PopUps_logic/manager_pop.gd" id="3_v1b0s"]
 [ext_resource type="PackedScene" uid="uid://bikkxhiyocwkv" path="res://PopUps_logic/PopEstatico.tscn" id="4_pd3fg"]
@@ -9,8 +10,10 @@
 [ext_resource type="Script" uid="uid://ckivevl72rm66" path="res://PopUps_logic/life_manager.gd" id="7_kbmgc"]
 [ext_resource type="Script" uid="uid://6bmtgqt03i2m" path="res://PopUps_logic/hud.gd" id="8_uhh3t"]
 [ext_resource type="PackedScene" uid="uid://dnwme4fh6qy43" path="res://hyper-dopaminer/minigame_query.tscn" id="9_ii616"]
+[ext_resource type="PackedScene" uid="uid://csa024myscaoq" path="res://PET/pet/PET.tscn" id="11_6nid3"]
 
 [node name="main" type="Node2D" unique_id=551109903]
+script = ExtResource("1_pd3fg")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=342040004]
 z_index = -1
@@ -41,3 +44,6 @@ offset_left = 385.0
 offset_top = 218.0
 offset_right = 385.0
 offset_bottom = 218.0
+
+[node name="Pet" parent="." unique_id=209653308 instance=ExtResource("11_6nid3")]
+position = Vector2(1723, 121)

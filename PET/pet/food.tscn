@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c4brux1e18y0h"]
+
+[ext_resource type="Texture2D" uid="uid://d00ddedy70b5u" path="res://PET/sprites/dish-hamburger-stacked-bun-meat-lettuce_20260217_095537.png" id="1_es1dl"]
+[ext_resource type="Script" uid="uid://dcdmqopfx177t" path="res://PET/pet/food.gd" id="1_wjo2h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb8ss"]
+size = Vector2(59, 42)
+
+[node name="Food" type="Area2D" unique_id=1432356105]
+script = ExtResource("1_wjo2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2100240291]
+scale = Vector2(0.33, 0.29500005)
+texture = ExtResource("1_es1dl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=657547718]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_qb8ss")
