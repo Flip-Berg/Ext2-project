@@ -39,9 +39,9 @@ script = ExtResource("7_kbmgc")
 [node name="HUD" type="CanvasLayer" parent="." unique_id=310080760]
 script = ExtResource("8_uhh3t")
 
-[node name="LivesLabel" type="Label" parent="HUD" unique_id=561145719]
+[node name="LivesContainer" type="HBoxContainer" parent="HUD" unique_id=1237110398]
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
 
 [node name="Node2D" parent="." unique_id=649769624 instance=ExtResource("9_ii616")]
 offset_left = 385.0
