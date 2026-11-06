@@ -1,15 +1,15 @@
+
 extends Control
 
-# Puxando nossos nós da interface
-@onready var texto_objetivo = $TextoObjetivo # A query com a lacuna
-@onready var entrada_jogador = $EntradaJogador
-@onready var label_pseudocodigo = $LabelPseudocodigo
-@onready var barra_tempo = $BarraTempo
-@onready var fundo_feedback = $FundoFeedback # O ColorRect que criamos
+@onready var texto_objetivo: Label = $TextoObjetivo
+@onready var entrada_jogador: LineEdit = $EntradaJogador
+@onready var label_pseudocodigo: Label = $LabelPseudocodigo
+@onready var barra_tempo: ProgressBar = $BarraTempo
+@onready var fundo_feedback: ColorRect = $FundoFeedback
+@onready var label_feedback: Label = $LabelFeedback
 
-# 5. MAIOR VARIABILIDADE E 4. PSEUDOCÓDIGO / 2. PREENCHA A LACUNA
-# Usamos um Dicionário de arrays para guardar todas as informações de cada rodada
-var banco_queries = [
+
+var banco_queries: Array[Dictionary] = [
 	{"pseudo": "-> Busque todos os dados da tabela usuários", "exibicao": "SELECT * ____ usuarios", "resposta": "FROM"},
 	{"pseudo": "-> Selecione apenas a coluna nome", "exibicao": "______ nome FROM clientes", "resposta": "SELECT"},
 	{"pseudo": "-> Atualize o registro de produtos", "exibicao": "______ produtos SET preco = 10", "resposta": "UPDATE"},
@@ -18,71 +18,145 @@ var banco_queries = [
 	{"pseudo": "-> Defina o valor de status para ativo", "exibicao": "UPDATE usuarios ______ status = 'ativo'", "resposta": "SET"}
 ]
 
-var query_atual = {}
+var query_atual: Dictionary = {}
 
-# 6. TIMER E DIFICULDADE
-var tempo_maximo = 30.0 # O jogador começa tendo 10 segundos para responder
-var tempo_restante = 30.0
-var multiplicador_dificuldade = 1.0 # Vai aumentar para fazer o tempo passar mais rápido
+var tempo_maximo: float = 30.0
+var tempo_restante: float = 30.0
+var multiplicador_dificuldade: float = 1.0
 
-func _ready():
+
+var rodada_finalizada: bool = false
+
+var tween_feedback: Tween
+var tween_fundo: Tween
+
+
+func _ready() -> void:
 	entrada_jogador.text_submitted.connect(_checar_resposta)
-	fundo_feedback.modulate.a = 0 # Garante que o fundo de feedback está invisível
+
+	fundo_feedback.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fundo_feedback.modulate.a = 0.0
+	label_feedback.modulate.a = 0.0
+
+	barra_tempo.min_value = 0.0
+	barra_tempo.max_value = 100.0
+
 	nova_query()
 
-# Esta função roda o tempo todo (60 vezes por segundo)
-func _process(delta):
-	# Diminui o tempo restante (delta é o tempo entre os frames)
-	tempo_restante -= delta 
-	
-	# Atualiza a barrinha visual (de 0 a 100)
-	barra_tempo.value = (tempo_restante / (tempo_maximo / multiplicador_dificuldade)) * 100
-	
-	# Se o tempo zerar
-	if tempo_restante <= 0:
-		_erro_por_tempo()
 
-func nova_query():
+func _process(delta: float) -> void:
+	if rodada_finalizada:
+		return
+
+	var duracao_rodada := tempo_maximo / multiplicador_dificuldade
+
+	tempo_restante = maxf(tempo_restante - delta, 0.0)
+	barra_tempo.value = (tempo_restante / duracao_rodada) * 100.0
+
+
+
+func nova_query() -> void:
+	rodada_finalizada = false
 	query_atual = banco_queries.pick_random()
-	
+
 	label_pseudocodigo.text = query_atual["pseudo"]
 	texto_objetivo.text = query_atual["exibicao"]
-	
+
+	entrada_jogador.editable = true
 	entrada_jogador.text = ""
 	entrada_jogador.grab_focus()
-	
-	# Reseta o tempo, dividindo pela dificuldade (ex: se dificuldade for 2.0, o tempo cai pra 5s)
-	tempo_restante = tempo_maximo / multiplicador_dificuldade
 
-func _checar_resposta(texto_digitado):
-	# O to_upper() faz o jogo aceitar tanto "from" minúsculo quanto "FROM" maiúsculo!
-	if texto_digitado.strip_edges().to_upper() == query_atual["resposta"].to_upper():
+	_limpar_feedback()
+
+	tempo_restante = tempo_maximo / multiplicador_dificuldade
+	barra_tempo.value = 100.0
+
+
+func _checar_resposta(texto_digitado: String) -> void:
+	if rodada_finalizada:
+		return
+
+	var resposta_digitada := texto_digitado.strip_edges().to_upper()
+	var resposta_correta := str(query_atual["resposta"]).strip_edges().to_upper()
+
+	if resposta_digitada == resposta_correta:
 		_acertou()
 	else:
 		_errou()
 
-# 1. FEEDBACK VISUAL
-func _acertou():
-	multiplicador_dificuldade = min(multiplicador_dificuldade + 0.05, 1.5) # Aumenta a dificuldade (tempo mais rápido!)
+
+func _acertou() -> void:
+	rodada_finalizada = true
+	entrada_jogador.editable = false
+
+	multiplicador_dificuldade = minf(
+		multiplicador_dificuldade + 0.05,
+		1.5
+	)
+
 	_piscar_tela(Color.GREEN)
-	nova_query()
-	
-func _errou():
+	_mostrar_feedback("ACERTOU! Próxima pergunta...", Color.GREEN)
+
+	await get_tree().create_timer(0.65).timeout
+
+	if is_inside_tree():
+		nova_query()
+
+
+func _errou() -> void:
 	_piscar_tela(Color.RED)
-	entrada_jogador.text = "" # Limpa a barra para ele tentar de novo
-	entrada_jogador.grab_focus() # FORÇA O CURSOR A VOLTAR PARA A BARRA
+	_mostrar_feedback("ERROU! Tente novamente.", Color.RED)
 
-func _erro_por_tempo():
-	_piscar_tela(Color.DARK_RED)
-	# Aqui no futuro nós vamos colocar o código para perder 1 vida!
-	multiplicador_dificuldade = max(1.0, multiplicador_dificuldade - 0.2) # Facilita um pouco já que ele perdeu
-	nova_query()
+	entrada_jogador.text = ""
+	entrada_jogador.grab_focus()
 
-# Função que usa 'Tween' para criar uma animação suave do fundo piscando e sumindo
-func _piscar_tela(cor: Color):
+
+
+func _erro_por_tempo() -> void:
+	if rodada_finalizada:
+		return
+
+	rodada_finalizada = true
+	entrada_jogador.editable = false
+
+
+func _mostrar_feedback(mensagem: String, cor: Color) -> void:
+	if tween_feedback != null and tween_feedback.is_running():
+		tween_feedback.kill()
+
+	label_feedback.text = mensagem
+	label_feedback.add_theme_color_override("font_color", cor)
+	label_feedback.modulate.a = 1.0
+
+	tween_feedback = create_tween()
+	tween_feedback.tween_interval(0.55)
+	tween_feedback.tween_property(
+		label_feedback,
+		"modulate:a",
+		0.0,
+		0.35
+	)
+
+
+func _limpar_feedback() -> void:
+	if tween_feedback != null and tween_feedback.is_running():
+		tween_feedback.kill()
+
+	label_feedback.text = ""
+	label_feedback.modulate.a = 0.0
+
+
+func _piscar_tela(cor: Color) -> void:
+	if tween_fundo != null and tween_fundo.is_running():
+		tween_fundo.kill()
+
 	fundo_feedback.color = cor
-	fundo_feedback.modulate.a = 0.4 # Fica 40% visível
-	
-	# Cria uma animação que faz a transparência (Alpha) ir para 0 em meio segundo
-	var tween = create_tween()
-	tween.tween_property(fundo_feedback, "modulate:a", 0.0, 0.5)
+	fundo_feedback.modulate.a = 0.18
+
+	tween_fundo = create_tween()
+	tween_fundo.tween_property(
+		fundo_feedback,
+		"modulate:a",
+		0.0,
+		0.5
+	)
