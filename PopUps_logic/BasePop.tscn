@@ -1,19 +1,20 @@
 [gd_scene format=3 uid="uid://bo0n8pfhfmtoq"]
 
-[ext_resource type="Script" uid="uid://2df1im13qq70" path="res://base_pop.gd" id="1_omiol"]
-[ext_resource type="Texture2D" uid="uid://b6fbm8l8pppxj" path="res://icone-carinha-vermelha.png" id="2_1680k"]
-[ext_resource type="Texture2D" uid="uid://d3xuxoqaw85gq" path="res://imagens/pop-up-comida-588x205.png" id="2_err63"]
-[ext_resource type="Texture2D" uid="uid://d3gv70i6m15o1" path="res://imagens/pop-up-homens_solteiros-588x205.png" id="3_cl47u"]
-[ext_resource type="Texture2D" uid="uid://cneyw5lpw7yuq" path="res://imagens/pop-up-seja_belo-588x205.png" id="4_iiojw"]
-[ext_resource type="Script" uid="uid://cndet4fwc0dd" path="res://botao.gd" id="4_uxmkj"]
-[ext_resource type="Texture2D" uid="uid://du4oyjr6sdrcd" path="res://imagens/pop-up-tarologa-588x205.png" id="5_ipgwu"]
-[ext_resource type="Texture2D" uid="uid://bma8eoamhyv2y" path="res://grids/box-amarelo-620x243.png" id="6_err63"]
-[ext_resource type="Texture2D" uid="uid://d2kbb5mo1fe2p" path="res://grids/box-ciano-620x243.png" id="7_cl47u"]
-[ext_resource type="Texture2D" uid="uid://nbaie1v4wt31" path="res://grids/box-roxo-620x243.png" id="8_iiojw"]
-[ext_resource type="Texture2D" uid="uid://bs42jx040riun" path="res://grids/box-verde-620x243.png" id="9_ipgwu"]
-[ext_resource type="Texture2D" uid="uid://bhdleaqk6gm0v" path="res://grids/box-vermelho-620x243.png" id="10_8v8dm"]
-[ext_resource type="Texture2D" uid="uid://c0yyu8umql55a" path="res://sprites/icone-carinha-verde.png" id="13_ipgwu"]
-[ext_resource type="Texture2D" uid="uid://ckqxpa5hf1drh" path="res://sprites/icone-carinha-amarela.png" id="14_8v8dm"]
+[ext_resource type="Script" uid="uid://2df1im13qq70" path="res://PopUps_logic/base_pop.gd" id="1_omiol"]
+[ext_resource type="Texture2D" uid="uid://b6fbm8l8pppxj" path="res://PopUps_logic/icone-carinha-vermelha.png" id="2_1680k"]
+[ext_resource type="Texture2D" uid="uid://d3xuxoqaw85gq" path="res://PopUps_logic/imagens/pop-up-comida-588x205.png" id="2_err63"]
+[ext_resource type="Texture2D" uid="uid://d3gv70i6m15o1" path="res://PopUps_logic/imagens/pop-up-homens_solteiros-588x205.png" id="3_cl47u"]
+[ext_resource type="Texture2D" uid="uid://cneyw5lpw7yuq" path="res://PopUps_logic/imagens/pop-up-seja_belo-588x205.png" id="4_iiojw"]
+[ext_resource type="Script" uid="uid://cndet4fwc0dd" path="res://PopUps_logic/botao.gd" id="4_uxmkj"]
+[ext_resource type="Texture2D" uid="uid://du4oyjr6sdrcd" path="res://PopUps_logic/imagens/pop-up-tarologa-588x205.png" id="5_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://bma8eoamhyv2y" path="res://PopUps_logic/grids/box-amarelo-620x243.png" id="6_err63"]
+[ext_resource type="Texture2D" uid="uid://d2kbb5mo1fe2p" path="res://PopUps_logic/grids/box-ciano-620x243.png" id="7_cl47u"]
+[ext_resource type="Texture2D" uid="uid://nbaie1v4wt31" path="res://PopUps_logic/grids/box-roxo-620x243.png" id="8_iiojw"]
+[ext_resource type="Texture2D" uid="uid://bs42jx040riun" path="res://PopUps_logic/grids/box-verde-620x243.png" id="9_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://bhdleaqk6gm0v" path="res://PopUps_logic/grids/box-vermelho-620x243.png" id="10_8v8dm"]
+[ext_resource type="AudioStream" uid="uid://c6npbs0yyd2ne" path="res://audios/disconnect.mp3" id="11_d06yy"]
+[ext_resource type="Texture2D" uid="uid://c0yyu8umql55a" path="res://PopUps_logic/sprites/icone-carinha-verde.png" id="13_ipgwu"]
+[ext_resource type="Texture2D" uid="uid://ckqxpa5hf1drh" path="res://PopUps_logic/sprites/icone-carinha-amarela.png" id="14_8v8dm"]
 
 [node name="BasePop" type="TextureRect" unique_id=129022305]
 offset_right = 620.0
@@ -29,6 +30,10 @@ offset_bottom = 243.0
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
+
+[node name="FechamentoSom" type="AudioStreamPlayer" parent="." unique_id=318832378]
+stream = ExtResource("11_d06yy")
+volume_db = 6.7
 
 [node name="RandomImage" type="TextureRect" parent="." unique_id=1719460392]
 layout_mode = 0

@@ -17,7 +17,8 @@ var game: float = 0.0
 
 @onready var life_manager: LifeManager = $"../LifeManager"
 @onready var timer: Timer = $SpawnTimer
-
+@onready var som_dano: AudioStreamPlayer = $DanoSom
+@onready var som_abre: AudioStreamPlayer = $AbreSom
 
 func _ready() -> void:
 	timer.timeout.connect(_spawn_time)
@@ -116,11 +117,13 @@ func _spawn_popup(
 	if popup.has_signal("request"):
 		if not popup.is_connected("request", _on_multiplier_triggered):
 			popup.connect("request", _on_multiplier_triggered)
+	som_abre.play()
 
 	return popup
 
 
 func _on_popup_expired() -> void:
+	som_dano.play()
 	life_manager.lose_life()
 
 

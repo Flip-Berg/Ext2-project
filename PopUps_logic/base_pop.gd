@@ -10,6 +10,7 @@ signal expired
 
 @onready var random_image: TextureRect= $RandomImage
 @onready var random_grid: TextureRect= $RandomGrid
+@onready var som_fecha: AudioStreamPlayer = $FechamentoSom
 
 var lifetime_timer= Timer
 var closed: bool=false
@@ -48,6 +49,7 @@ func close() -> void:
 	
 	if lifetime_timer!=null:
 		lifetime_timer.stop()
+	som_fecha.play()
 	queue_free()
 	
 func _on_lifetime_timeout()-> void:

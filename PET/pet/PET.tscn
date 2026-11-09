@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://62cuowbe3xkq" path="res://PET/sprites/kiki_2_com_balao.png" id="2_2h66o"]
 [ext_resource type="Texture2D" uid="uid://dl1sofsok8kgg" path="res://PET/sprites/kiki_3_com_balao.png" id="3_jqbgo"]
 [ext_resource type="PackedScene" uid="uid://c4brux1e18y0h" path="res://PET/pet/food.tscn" id="5_2h66o"]
+[ext_resource type="AudioStream" uid="uid://c5iqaxfksjmtg" path="res://audios/snore_mimi_primeiro_segundo.mp3" id="6_owt6d"]
+[ext_resource type="AudioStream" uid="uid://rtyvvt33quyi" path="res://audios/siren_primeiro_segundo.mp3" id="7_owt6d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjo2h"]
 size = Vector2(326, 303)
@@ -33,3 +35,9 @@ shape = SubResource("RectangleShape2D_wjo2h")
 
 [node name="Food" parent="." unique_id=1432356105 instance=ExtResource("5_2h66o")]
 position = Vector2(177, 139)
+
+[node name="DormiuSom" type="AudioStreamPlayer" parent="." unique_id=222551571]
+stream = ExtResource("6_owt6d")
+
+[node name="AcordouSom" type="AudioStreamPlayer" parent="." unique_id=288451783]
+stream = ExtResource("7_owt6d")

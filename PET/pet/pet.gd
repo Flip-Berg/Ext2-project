@@ -13,8 +13,10 @@ enum State {SLEEPING, AWAKE, STARVED}
 @export_group("Timers")
 @export var min_sleeping= 8.0
 @export var max_sleeping= 20.0
+
 # Penis
 @export var penis= 5.0
+
 @export var damage_time=3.0
 
 var state: State= State.SLEEPING
@@ -25,6 +27,8 @@ var state: State= State.SLEEPING
 @onready var damage_timer: Timer = $DamageTimer
 @onready var pet: Sprite2D = $PetSprite
 @onready var feeding_zone:  = $FeedingZone
+@onready var som_dormiu: AudioStreamPlayer = $DormiuSom
+@onready var som_acordou: AudioStreamPlayer = $AcordouSom
 
 func _ready() -> void:
 	for timer in [wake_timer, feed_timer, damage_timer]:
@@ -68,12 +72,14 @@ func _on_food_dropped() ->void:
 		feed_timer.stop()
 		food.return_home()
 		fed.emit()
+		som_dormiu.play()
 		_enter_sleeping()
 	else:
 		food.return_home()
 		
 
 func _on_wake_timer_timeout() -> void:
+	som_acordou.play()
 	_enter_awake()
  
  
