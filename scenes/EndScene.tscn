@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cc6e5opnrela2"]
+
+[ext_resource type="Texture2D" uid="uid://selknm3oj5tu" path="res://PopUps_logic/sprites/icone-carinha-vermelha.png" id="1_cv086"]
+
+[node name="Control" type="Control" unique_id=840432322]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="." unique_id=356972695]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel" unique_id=948039204]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer" unique_id=2133376386]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/CenterContainer/VBoxContainer" unique_id=1925697810]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+texture = ExtResource("1_cv086")
+
+[node name="Label" type="Label" parent="Panel/CenterContainer/VBoxContainer" unique_id=816901899]
+layout_mode = 2
+text = "VOCÊ NÃO É UM SIGMA!"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer" unique_id=111682623]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer" unique_id=103258463]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer" unique_id=1271560615]
+layout_mode = 2
