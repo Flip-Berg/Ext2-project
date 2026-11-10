@@ -3,18 +3,18 @@ extends Node
 const SAVE_PATH: String = "user://player_data.json"
 const LEADERBOARD_SIZE: int = 10
 
-# Preenchem as vagas vazias do placar (de 40 a 10 pts). Nunca são salvas.
+# Preenchem as vagas vazias do placar (de 999 a 50 pts). Nunca são salvas.
 const PLACEHOLDER_ENTRIES: Array = [
-	{"name": "root", "score": 40},
-	{"name": "admin", "score": 37},
-	{"name": "DBA_do_mal", "score": 33},
-	{"name": "sudo", "score": 30},
-	{"name": "Marcelo_do_RH", "score": 27},
-	{"name": "estagiario", "score": 23},
-	{"name": "localhost", "score": 20},
-	{"name": "SELECT_estrela", "score": 17},
-	{"name": "null", "score": 13},
-	{"name": "Dev_Anonimo", "score": 10},
+	{"name": "root", "score": 999},
+	{"name": "admin", "score": 850},
+	{"name": "DBA_do_mal", "score": 720},
+	{"name": "sudo", "score": 600},
+	{"name": "Marcelo_do_RH", "score": 480},
+	{"name": "estagiario", "score": 370},
+	{"name": "localhost", "score": 260},
+	{"name": "SELECT_estrela", "score": 170},
+	{"name": "null", "score": 100},
+	{"name": "Dev_Anonimo", "score": 50},
 ]
 
 signal score_changed(score: int)
