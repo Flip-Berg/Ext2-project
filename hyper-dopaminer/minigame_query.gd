@@ -1,6 +1,8 @@
 
 extends Control
 
+signal resposta_correta
+
 @onready var texto_objetivo: Label = $TextoObjetivo
 @onready var entrada_jogador: LineEdit = $EntradaJogador
 @onready var label_pseudocodigo: Label = $LabelPseudocodigo
@@ -87,6 +89,7 @@ func _checar_resposta(texto_digitado: String) -> void:
 
 func _acertou() -> void:
 	rodada_finalizada = true
+	resposta_correta.emit()
 	entrada_jogador.editable = false
 
 	multiplicador_dificuldade = minf(

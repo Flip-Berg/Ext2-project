@@ -2,6 +2,7 @@ class_name BasePop
 extends TextureRect
 
 signal expired
+signal closed_by_player
 
 @export var lifetime = 5.0
 
@@ -46,6 +47,7 @@ func close() -> void:
 		return
 	
 	closed=true
+	closed_by_player.emit()
 	
 	if lifetime_timer!=null:
 		lifetime_timer.stop()

@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal popup_closed
+
 @export var static_popup: PackedScene
 @export var moving_popup: PackedScene
 @export var multiplier_popup: PackedScene
@@ -113,6 +115,7 @@ func _spawn_popup(
 	)
 
 	popup.expired.connect(_on_popup_expired)
+	popup.closed_by_player.connect(popup_closed.emit)
 
 	if popup.has_signal("request"):
 		if not popup.is_connected("request", _on_multiplier_triggered):

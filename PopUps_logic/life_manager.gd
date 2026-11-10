@@ -18,9 +18,5 @@ func lose_life()->void :
 	life_lost.emit(current_lives)
 	
 	if current_lives<=0:
+		# A GameScene mostra a tela de game over ao receber este sinal.
 		dead.emit()
-		# Para fechar o jogo:
-		get_tree().quit()
-	
-		# Para reiniciar a cena atual:
-		# get_tree().reload_current_scene()

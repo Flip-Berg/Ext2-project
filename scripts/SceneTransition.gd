@@ -3,6 +3,8 @@ extends CanvasLayer
 @onready var color_rect: ColorRect = $ColorRect
 
 func _ready() -> void:
+	# Funciona mesmo com o jogo pausado (ex.: a partir da tela de game over).
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	# Começa totalmente transparente e sem bloquear cliques
 	color_rect.color.a = 0.0
 	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -17,7 +19,8 @@ func change_scene_to_file(target_scene_path: String, duration: float = 0.5) -> v
 	tween_out.tween_property(color_rect, "color:a", 1.0, duration)
 	await tween_out.finished
 	
-	# 2. Troca a cena na árvore do jogo
+	# 2. Troca a cena na árvore do jogo (despausando, para a nova cena não começar parada)
+	get_tree().paused = false
 	get_tree().change_scene_to_file(target_scene_path)
 	
 	# Pequena pausa opcional para a nova cena carregar suavemente
