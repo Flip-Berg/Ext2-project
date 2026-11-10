@@ -4,10 +4,14 @@ extends Control
 
 signal resposta_correta
 signal tempo_esgotado
+signal _continuar  # fim da revelação da resposta (tempo ou Enter)
 
 const PENALIDADE_ERRO: float = 3.0       # segundos perdidos por resposta errada
 const PAUSA_ACERTO: float = 0.65
-const PAUSA_TEMPO_ESGOTADO: float = 2.5
+# Quanto tempo a resposta certa fica na tela quando o tempo acaba (Enter pula).
+const REVELACAO_MIN: float = 5.0
+const REVELACAO_POR_CARACTERE: float = 0.05
+const REVELACAO_MAX: float = 12.0
 const COR_PALAVRA_CHAVE: Color = Color("#c792ea")
 const COR_COLUNA: Color = Color("#82aaff")
 const COR_TEXTO: Color = Color("#c3e88d")
@@ -35,6 +39,7 @@ var _destaque := CodeHighlighter.new()
 
 var tempo_restante: float = 0.0
 var rodada_finalizada: bool = true
+var _revelando: bool = false
 
 var tween_feedback: Tween
 var tween_fundo: Tween
@@ -130,10 +135,24 @@ func _erro_por_tempo() -> void:
 	entrada_jogador.editable = false
 	tempo_esgotado.emit()
 	_piscar_tela(Color.DARK_RED)
-	_mostrar_feedback("TEMPO ESGOTADO! Resposta: %s" % _pergunta.answer_text(), Color.RED, PAUSA_TEMPO_ESGOTADO - 0.4)
-	await get_tree().create_timer(PAUSA_TEMPO_ESGOTADO, false).timeout
+
+	# Mostra a consulta certa inteira, com a parte que faltava entre « ».
+	var certa := _pergunta.revealed_sql()
+	texto_objetivo.text = certa
+	var duracao := clampf(REVELACAO_MIN + certa.length() * REVELACAO_POR_CARACTERE, REVELACAO_MIN, REVELACAO_MAX)
+	_mostrar_feedback("TEMPO ESGOTADO! A resposta certa está acima. (Enter para continuar)", Color.RED, duracao)
+
+	_revelando = true
+	get_tree().create_timer(duracao, false).timeout.connect(_fim_da_revelacao)
+	await _continuar
 	if is_inside_tree():
 		nova_query()
+
+
+func _fim_da_revelacao() -> void:
+	if _revelando:
+		_revelando = false
+		_continuar.emit()
 
 
 # --- campo de resposta (CodeEdit de uma linha com autocomplete) ---
@@ -163,6 +182,10 @@ func _atualizar_destaque(tabela: SqlTable) -> void:
 
 func _on_entrada_gui_input(event: InputEvent) -> void:
 	if not (event is InputEventKey and event.pressed and event.keycode in [KEY_ENTER, KEY_KP_ENTER]):
+		return
+	if _revelando:
+		entrada_jogador.accept_event()
+		_fim_da_revelacao()
 		return
 	# Enter com a lista de sugestões aberta escolhe a sugestão; senão, envia.
 	if entrada_jogador.get_code_completion_selected_index() >= 0:

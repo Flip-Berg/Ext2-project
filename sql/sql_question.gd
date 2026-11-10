@@ -62,6 +62,17 @@ func answer_text() -> String:
 	return SqlNode.join_tokens(tokens.slice(blank_start, blank_end))
 
 
+## SQL certo inteiro, com a parte que faltava marcada: SELECT * «FROM» tabela ...
+func revealed_sql() -> String:
+	if mode == Mode.FULL:
+		return tree.to_sql()
+	var parts: Array[String] = []
+	for text in [prefix_text(), "«%s»" % answer_text(), suffix_text()]:
+		if text != "":
+			parts.append(text)
+	return " ".join(parts)
+
+
 ## SQL completo com o texto do jogador na lacuna.
 func full_answer(player_text: String) -> String:
 	return "%s %s %s" % [prefix_text(), player_text, suffix_text()]
