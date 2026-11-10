@@ -17,6 +17,10 @@ offset_left = -221.0
 offset_top = -26.0
 offset_right = 297.0
 offset_bottom = 23.0
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 3
+max_lines_visible = 2
 
 [node name="Food" parent="." unique_id=1432356105 instance=ExtResource("2_qmr2b")]
 position = Vector2(-285, 0)
