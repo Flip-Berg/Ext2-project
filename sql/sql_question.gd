@@ -12,9 +12,12 @@ enum Mode {
 }
 
 const BLANK: String = "____"
-const BASE_TIME: float = 10.0
-const TIME_PER_COST: float = 4.0
-const EXTRA_TIME: Dictionary = {Mode.KEYWORD: 0.0, Mode.PIECE: 0.0, Mode.CLAUSE: 6.0, Mode.FULL: 12.0}
+# Tempo = leitura + raciocínio pelo custo da consulta + tempo para pensar no tipo
+# de lacuna + digitação proporcional ao tamanho da resposta.
+const BASE_TIME: float = 8.0
+const TIME_PER_COST: float = 3.0
+const EXTRA_TIME: Dictionary = {Mode.KEYWORD: 0.0, Mode.PIECE: 2.0, Mode.CLAUSE: 5.0, Mode.FULL: 10.0}
+const TIME_PER_TYPED_CHAR: float = 0.35
 const LONG_COST: int = 8
 
 var tree: SqlStatement
@@ -35,7 +38,8 @@ static func create(p_tree: SqlStatement, p_mode: Mode, rng: RandomNumberGenerato
 	q.tokens = p_tree.to_tokens()
 	q.mode = p_mode
 	q._pick_blank(rng)
-	q.time_limit = BASE_TIME + TIME_PER_COST * p_tree.cost() + EXTRA_TIME[q.mode]
+	q.time_limit = BASE_TIME + TIME_PER_COST * p_tree.cost() + EXTRA_TIME[q.mode] \
+		+ TIME_PER_TYPED_CHAR * q.answer_text().length()
 	return q
 
 
