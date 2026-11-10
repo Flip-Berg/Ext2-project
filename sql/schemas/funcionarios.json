@@ -1,0 +1,18 @@
+{
+	"table": "funcionarios",
+	"singular": "funcionário",
+	"plural": "funcionários",
+	"gender": "m",
+	"columns": [
+		{"name": "nome", "type": "text", "pt": "nome", "gender": "m", "like": true, "editable": false,
+		 "values": ["Ana", "Bruno", "Carla", "Diego", "Elisa", "Felipe", "Gabriela", "Heitor", "Isabela", "Joao", "Karina", "Lucas", "Marina", "Nicolas", "Olivia", "Pedro", "Rafaela", "Sofia", "Tiago", "Vitoria"]},
+		{"name": "setor", "type": "text", "pt": "setor", "gender": "m", "editable": true,
+		 "values": ["TI", "RH", "Vendas", "Financeiro", "Suporte"]},
+		{"name": "salario", "type": "number", "pt": "salário", "gender": "m", "editable": true,
+		 "min": 1500, "max": 9000, "step": 100,
+		 "phrases": {">": "que ganham mais de {v}", "<": "que ganham menos de {v}", ">=": "que ganham {v} ou mais", "<=": "que ganham até {v}"}},
+		{"name": "admissao", "type": "date", "pt": "data de admissão", "gender": "f", "editable": false,
+		 "min": "2015-01-01", "max": "2026-06-30",
+		 "phrases": {">": "admitidos depois de {v}", "<": "admitidos antes de {v}", ">=": "admitidos a partir de {v}", "<=": "admitidos até {v}"}}
+	]
+}
