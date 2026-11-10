@@ -12,11 +12,14 @@ const PAUSA_ACERTO: float = 0.65
 const REVELACAO_MIN: float = 5.0
 const REVELACAO_POR_CARACTERE: float = 0.05
 const REVELACAO_MAX: float = 12.0
-const COR_PALAVRA_CHAVE: Color = Color("#c792ea")
-const COR_COLUNA: Color = Color("#82aaff")
-const COR_TEXTO: Color = Color("#c3e88d")
-const COR_NUMERO: Color = Color("#f78c6c")
-const COR_SIMBOLO: Color = Color("#89ddff")
+# Cores escuras: o painel (QueryPanel.png) é cinza claro.
+const COR_PALAVRA_CHAVE: Color = Color("#6a1b9a")
+const COR_COLUNA: Color = Color("#0d47a1")
+const COR_TEXTO: Color = Color("#1b5e20")
+const COR_NUMERO: Color = Color("#bf360c")
+const COR_SIMBOLO: Color = Color("#37474f")
+const COR_ACERTO: Color = Color("#1b5e20")
+const COR_ERRO: Color = Color("#b71c1c")
 const TIPOS_PT: Dictionary = {"number": "número", "text": "texto", "date": "data"}
 
 @onready var texto_objetivo: Label = $TextoObjetivo
@@ -115,7 +118,7 @@ func _acertou() -> void:
 	resposta_correta.emit(pontos)
 	entrada_jogador.editable = false
 	_piscar_tela(Color.GREEN)
-	_mostrar_feedback("ACERTOU! +%d pts" % pontos, Color.GREEN, 0.55)
+	_mostrar_feedback("ACERTOU! +%d pts" % pontos, COR_ACERTO, 0.55)
 	await get_tree().create_timer(PAUSA_ACERTO, false).timeout
 	if is_inside_tree():
 		nova_query()
@@ -125,7 +128,7 @@ func _errou(mensagem: String) -> void:
 	# O texto fica no campo para o jogador corrigir.
 	tempo_restante = maxf(tempo_restante - PENALIDADE_ERRO, 0.0)
 	_piscar_tela(Color.RED)
-	_mostrar_feedback("ERROU! %s (-%ds)" % [mensagem, int(PENALIDADE_ERRO)], Color.RED, 2.5)
+	_mostrar_feedback("ERROU! %s (-%ds)" % [mensagem, int(PENALIDADE_ERRO)], COR_ERRO, 2.5)
 	entrada_jogador.grab_focus()
 
 
@@ -141,7 +144,7 @@ func _erro_por_tempo() -> void:
 	var certa := _pergunta.revealed_sql()
 	texto_objetivo.text = certa
 	var duracao := clampf(REVELACAO_MIN + certa.length() * REVELACAO_POR_CARACTERE, REVELACAO_MIN, REVELACAO_MAX)
-	_mostrar_feedback("TEMPO ESGOTADO! A resposta certa está acima. (Enter para continuar)", Color.RED, duracao)
+	_mostrar_feedback("TEMPO ESGOTADO! A resposta certa está acima. (Enter para continuar)", COR_ERRO, duracao)
 
 	_revelando = true
 	get_tree().create_timer(duracao, false).timeout.connect(_fim_da_revelacao)
@@ -165,8 +168,8 @@ func _configurar_entrada() -> void:
 	entrada_jogador.gui_input.connect(_on_entrada_gui_input)
 	_destaque.number_color = COR_NUMERO
 	_destaque.symbol_color = COR_SIMBOLO
-	_destaque.function_color = Color.WHITE
-	_destaque.member_variable_color = Color.WHITE
+	_destaque.function_color = Color.BLACK
+	_destaque.member_variable_color = Color.BLACK
 	_destaque.add_color_region("'", "'", COR_TEXTO, false)
 	_destaque.add_color_region("\"", "\"", COR_TEXTO, false)
 
@@ -227,10 +230,10 @@ func _on_completion_requested() -> void:
 func _schema_bbcode(tabela: SqlTable) -> String:
 	var linhas: Array[String] = ["[b]Tabela: %s[/b]" % tabela.name, ""]
 	for coluna in tabela.columns:
-		linhas.append("[color=#82aaff]%s[/color]  [color=gray]%s[/color]" % [coluna["name"], TIPOS_PT[coluna["type"]]])
-		linhas.append("   [color=gray]%s[/color]" % _exemplo(coluna))
+		linhas.append("[color=#0d47a1][b]%s[/b][/color]  [color=#424242]%s[/color]" % [coluna["name"], TIPOS_PT[coluna["type"]]])
+		linhas.append("   [color=#424242]%s[/color]" % _exemplo(coluna))
 	linhas.append("")
-	linhas.append("[color=gray]Textos e datas entre aspas: 'TI', '2024-01-31'[/color]")
+	linhas.append("[color=#424242]Textos e datas entre aspas: 'TI', '2024-01-31'[/color]")
 	return "\n".join(linhas)
 
 

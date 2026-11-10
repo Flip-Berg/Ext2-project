@@ -57,10 +57,9 @@ text = "0 pts"
 vertical_alignment = 1
 
 [node name="Node2D" parent="." unique_id=649769624 instance=ExtResource("9_ii616")]
-offset_left = 385.0
-offset_top = 218.0
-offset_right = 385.0
-offset_bottom = 218.0
+offset_top = 120.0
+offset_right = 1564.0
+offset_bottom = 1020.0
 
 [node name="Pet" parent="." unique_id=209653308 instance=ExtResource("11_6nid3")]
 position = Vector2(1723, 121)

@@ -22,7 +22,7 @@ scale = Vector2(0.6442105, 0.54782605)
 texture = ExtResource("2_2h66o")
 
 [node name="Mail" parent="." unique_id=1466329351 instance=ExtResource("7_qr6n4")]
-position = Vector2(-195, 264)
+position = Vector2(-623, -61)
 
 [node name="FeedingZone" type="Area2D" parent="." unique_id=332534744]
 
