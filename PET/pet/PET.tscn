@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://vfyw63so83lq" path="res://PET/sprites/kiki_1.png" id="1_t6svn"]
 [ext_resource type="Texture2D" uid="uid://62cuowbe3xkq" path="res://PET/sprites/kiki_2_com_balao.png" id="2_2h66o"]
 [ext_resource type="Texture2D" uid="uid://dl1sofsok8kgg" path="res://PET/sprites/kiki_3_com_balao.png" id="3_jqbgo"]
-[ext_resource type="PackedScene" uid="uid://c4brux1e18y0h" path="res://PET/pet/food.tscn" id="5_2h66o"]
 [ext_resource type="AudioStream" uid="uid://c5iqaxfksjmtg" path="res://audios/snore_mimi_primeiro_segundo.mp3" id="6_owt6d"]
 [ext_resource type="AudioStream" uid="uid://rtyvvt33quyi" path="res://audios/siren_primeiro_segundo.mp3" id="7_owt6d"]
+[ext_resource type="PackedScene" uid="uid://c2aycyvtcq64f" path="res://PET/mail/mail.tscn" id="7_qr6n4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjo2h"]
 size = Vector2(326, 303)
@@ -16,10 +16,17 @@ script = ExtResource("1_jatmv")
 sprite_sleeping = ExtResource("2_2h66o")
 sprite_awake = ExtResource("3_jqbgo")
 sprite_damage = ExtResource("1_t6svn")
+min_sleeping = null
+max_sleeping = null
+penis = null
+damage_time = null
 
 [node name="PetSprite" type="Sprite2D" parent="." unique_id=487522264]
 scale = Vector2(0.6442105, 0.54782605)
 texture = ExtResource("2_2h66o")
+
+[node name="Mail" parent="." unique_id=1466329351 instance=ExtResource("7_qr6n4")]
+position = Vector2(-195, 264)
 
 [node name="FeedingZone" type="Area2D" parent="." unique_id=332534744]
 
@@ -32,9 +39,6 @@ shape = SubResource("RectangleShape2D_wjo2h")
 [node name="FeedTimer" type="Timer" parent="." unique_id=635509931]
 
 [node name="DamageTimer" type="Timer" parent="." unique_id=1658706959]
-
-[node name="Food" parent="." unique_id=1432356105 instance=ExtResource("5_2h66o")]
-position = Vector2(177, 139)
 
 [node name="DormiuSom" type="AudioStreamPlayer" parent="." unique_id=222551571]
 stream = ExtResource("6_owt6d")

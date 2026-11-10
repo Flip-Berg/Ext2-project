@@ -13,33 +13,36 @@ var _home_position: Vector2
 var _original_z_index: int
 var _return_tween: Tween
 
+@onready var _shape: CollisionShape2D = $CollisionShape2D
+
 
 func _ready() -> void:
-	input_pickable = true
 	_home_position = position
 	_original_z_index = z_index
+
 
 func _process(_delta: float) -> void:
 	if _dragging:
 		global_position = get_global_mouse_position() + _grab_offset
 
-func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
-	if not _draggable or _dragging:
-		return
-	if event is InputEventMouseButton \
-			and event.button_index == MOUSE_BUTTON_LEFT \
-			and event.pressed:
-		_start_drag()
 
 func _input(event: InputEvent) -> void:
-	if not _dragging:
+	if not (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
 		return
-	if event is InputEventMouseButton \
-			and event.button_index == MOUSE_BUTTON_LEFT \
-			and not event.pressed:
+	if event.pressed:
+		if _draggable and not _dragging and _is_mouse_over():
+			_start_drag()
+	elif _dragging:
 		_dragging = false
 		z_index = _original_z_index
 		dropped.emit()
+
+
+func _is_mouse_over() -> bool:
+	var size: Vector2 = (_shape.shape as RectangleShape2D).size
+	var local_pos: Vector2 = _shape.to_local(get_global_mouse_position())
+	return Rect2(-size / 2.0, size).has_point(local_pos)
+
 
 func set_draggable(value: bool) -> void:
 	_draggable = value

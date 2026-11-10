@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c2aycyvtcq64f"]
+
+[ext_resource type="Script" uid="uid://dw2nhxxbtfrua" path="res://PET/mail/mail.gd" id="1_qmr2b"]
+[ext_resource type="Texture2D" uid="uid://dnjqe2qdjgr62" path="res://PET/sprites/barra_retangulo_arredondado.png" id="1_wnv0y"]
+[ext_resource type="PackedScene" uid="uid://c4brux1e18y0h" path="res://PET/pet/food.tscn" id="2_qmr2b"]
+
+[node name="Mail" type="Node2D" unique_id=1466329351]
+script = ExtResource("1_qmr2b")
+emails = Array[String](["Alguém fez UPDATE sem WHERE e agora todos os clientes se chamam tung tung tung sahur", "AVISO: é falsa a informação de que a empresa dará aumento salarial ao maior farmador de aura", "O Marcelo do RH pediu para perguntar qual plugin do Claude automatiza a produção de café", "Aparentemente o restaurante aqui do lado considera notas de 67 reais como falsas", "Tem um doido parado aqui no corredor segurando um taco", "PETIÇÃO: usar metade do orçamento para comprar JBL's e tocar phonk durante o horário de trabalho"])
+
+[node name="Barra" type="Sprite2D" parent="." unique_id=1545541274]
+scale = Vector2(0.5681056, 0.71532845)
+texture = ExtResource("1_wnv0y")
+
+[node name="Email" type="Label" parent="." unique_id=1296030365]
+offset_left = -221.0
+offset_top = -26.0
+offset_right = 297.0
+offset_bottom = 23.0
+
+[node name="Food" parent="." unique_id=1432356105 instance=ExtResource("2_qmr2b")]
+position = Vector2(-285, 0)
