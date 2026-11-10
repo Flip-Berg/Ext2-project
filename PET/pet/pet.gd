@@ -15,7 +15,7 @@ enum State {SLEEPING, AWAKE, STARVED}
 @export var min_sleeping: float = 8.0
 @export var max_sleeping: float = 20.0
 
-@export var penis: float = 5.0
+@export var feed_window: float = 5.0
 @export var damage_time: float = 3.0
 
 var state: State = State.SLEEPING
@@ -52,7 +52,7 @@ func _enter_awake() -> void:
 	state = State.AWAKE
 	pet.texture = sprite_awake
 	food.set_draggable(true)
-	feed_timer.start(penis)
+	feed_timer.start(feed_window)
 	
 func _enter_sleeping() -> void:
 	state = State.SLEEPING

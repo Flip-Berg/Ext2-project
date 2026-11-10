@@ -5,8 +5,6 @@
 
 [node name="ManagerPop" type="CanvasLayer" unique_id=1945478739]
 
-[node name="Timer" type="Timer" parent="." unique_id=397385150]
-
 [node name="DanoSom" type="AudioStreamPlayer" parent="." unique_id=980257592]
 stream = ExtResource("1_i7gyn")
 
