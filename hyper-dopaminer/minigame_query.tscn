@@ -30,44 +30,49 @@ show_percentage = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1694489575]
 layout_mode = 0
-offset_left = 850.0
-offset_top = 100.0
-offset_right = 1130.0
-offset_bottom = 500.0
-text = "GLOSSÁRIO:
-
-SELECT: Busca dados
-
-FROM: De qual tabela
-
-WHERE: Condição (Onde)
-
-UPDATE: Atualizar dados
-
-INSERT INTO: Inserir dados"
+offset_left = 830.0
+offset_top = 235.0
+offset_right = 1135.0
+offset_bottom = 630.0
+bbcode_enabled = true
+theme_override_font_sizes/normal_font_size = 17
+theme_override_font_sizes/bold_font_size = 19
 
 [node name="LabelPseudocodigo" type="Label" parent="." unique_id=610091091]
 layout_mode = 0
-offset_left = 2.0
+offset_left = 20.0
 offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 92.0
+offset_right = 800.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
 
 [node name="TextoObjetivo" type="Label" parent="." unique_id=1433850010]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 102.0
-offset_right = 360.0
-offset_bottom = 145.0
+offset_left = 20.0
+offset_top = 145.0
+offset_right = 800.0
+offset_bottom = 235.0
+theme_override_colors/font_color = Color(0.75, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
 
-[node name="EntradaJogador" type="LineEdit" parent="." unique_id=1949269435]
+[node name="EntradaJogador" type="CodeEdit" parent="." unique_id=1949269435]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 180.0
-offset_right = 730.0
-offset_bottom = 225.0
+offset_left = 20.0
+offset_top = 245.0
+offset_right = 800.0
+offset_bottom = 290.0
+theme_override_font_sizes/font_size = 18
+placeholder_text = "Tab completa · Enter envia"
+scroll_fit_content_height = false
+code_completion_enabled = true
 
 [node name="LabelFeedback" type="Label" parent="." unique_id=1913343927]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 20.0
+offset_top = 300.0
+offset_right = 800.0
+offset_bottom = 400.0
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3

@@ -10,16 +10,20 @@ const PONTOS_SQL_CORRETA: int = 1
 @onready var manager_pop = $ManagerPop
 @onready var minigame = $Node2D
 @onready var game_over_screen: GameOverScreen = $GameOverScreen
+@onready var director: DifficultyDirector = $DifficultyDirector
 @onready var som_dano: AudioStreamPlayer = $DanoSom
 
 
 func _ready() -> void:
 	PlayerData.start_run()
+	manager_pop.director = director
+	minigame.director = director
 
 	pet.feeding_missed.connect(_on_pet_feeding_missed)
 	pet.fed.connect(PlayerData.add_points.bind(PONTOS_PET_ALIMENTADO))
 	manager_pop.popup_closed.connect(PlayerData.add_points.bind(PONTOS_POPUP_FECHADO))
 	minigame.resposta_correta.connect(PlayerData.add_points.bind(PONTOS_SQL_CORRETA))
+	minigame.tempo_esgotado.connect(_on_sql_tempo_esgotado)
 	life_manager.dead.connect(_on_dead)
 
 	# O som da última vida perdida toca até o fim mesmo com o jogo pausado.
@@ -28,6 +32,11 @@ func _ready() -> void:
 
 
 func _on_pet_feeding_missed() -> void:
+	som_dano.play()
+	life_manager.lose_life()
+
+
+func _on_sql_tempo_esgotado() -> void:
 	som_dano.play()
 	life_manager.lose_life()
 

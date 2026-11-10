@@ -17,6 +17,9 @@ signal popup_closed
 
 var game: float = 0.0
 
+## Definido pela GameScene. Sem ele, usa o ritmo antigo baseado só no tempo.
+var director: DifficultyDirector
+
 @onready var life_manager: LifeManager = $"../LifeManager"
 @onready var timer: Timer = $SpawnTimer
 @onready var som_dano: AudioStreamPlayer = $DanoSom
@@ -32,6 +35,12 @@ func _process(delta: float) -> void:
 
 
 func _reset_timer() -> void:
+	if director != null:
+		var interval := director.popup_interval_range()
+		timer.wait_time = randf_range(interval.x, interval.y)
+		timer.start()
+		return
+
 	var reduction := game * regression
 
 	var new_max := maxf(initial_max_time - reduction, max_min_time)
