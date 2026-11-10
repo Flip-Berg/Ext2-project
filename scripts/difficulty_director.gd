@@ -7,6 +7,8 @@ extends Node
 @export var score_for_max: float = 1000.0       # pontos para chegar à dificuldade máxima
 @export var seconds_for_max: float = 300.0    # tempo para chegar à dificuldade máxima
 @export_range(0.0, 1.0) var score_weight: float = 0.6
+## Nível inicial para cada dificuldade escolhida no login (fácil, médio, difícil).
+@export var start_levels: Array[float] = [0.0, 0.2, 0.4]
 
 @export_group("SQL")
 @export var min_budget: int = 3
@@ -35,7 +37,8 @@ func _process(delta: float) -> void:
 func level() -> float:
 	var by_score := PlayerData.current_score / score_for_max
 	var by_time := elapsed / seconds_for_max
-	return clampf(score_weight * by_score + (1.0 - score_weight) * by_time, 0.0, 1.0)
+	var start: float = start_levels[clampi(PlayerData.starting_difficulty, 0, start_levels.size() - 1)]
+	return clampf(start + score_weight * by_score + (1.0 - score_weight) * by_time, 0.0, 1.0)
 
 
 func sql_budget() -> int:

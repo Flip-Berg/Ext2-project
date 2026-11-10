@@ -22,6 +22,8 @@ signal score_changed(score: int)
 
 var player_name: String = "Dev_Anonimo"
 var current_score: int = 0
+## Dificuldade escolhida no login (0 fácil, 1 médio, 2 difícil). Não é salva.
+var starting_difficulty: int = 0
 var high_score: int = 0
 # Só entradas reais, da maior para a menor pontuação, no máximo LEADERBOARD_SIZE.
 var leaderboard: Array[Dictionary] = []
