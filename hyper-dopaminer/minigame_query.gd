@@ -2,7 +2,7 @@ extends Control
 ## Minigame de SQL: mostra um pedido em português gerado por SqlGenerator, o SQL com
 ## uma lacuna e confere a resposta com SqlChecker. Ver res://sql/ e o design no doc.
 
-signal resposta_correta
+signal resposta_correta(pontos: int)
 signal tempo_esgotado
 signal _continuar  # fim da revelação da resposta (tempo ou Enter)
 
@@ -111,10 +111,11 @@ func _enviar() -> void:
 
 func _acertou() -> void:
 	rodada_finalizada = true
-	resposta_correta.emit()
+	var pontos := _pergunta.points()
+	resposta_correta.emit(pontos)
 	entrada_jogador.editable = false
 	_piscar_tela(Color.GREEN)
-	_mostrar_feedback("ACERTOU! Próxima pergunta...", Color.GREEN, 0.55)
+	_mostrar_feedback("ACERTOU! +%d pts" % pontos, Color.GREEN, 0.55)
 	await get_tree().create_timer(PAUSA_ACERTO, false).timeout
 	if is_inside_tree():
 		nova_query()

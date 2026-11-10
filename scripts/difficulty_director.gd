@@ -4,7 +4,7 @@ extends Node
 ## Ela define o tamanho das perguntas de SQL, o tipo de lacuna e o ritmo dos pop-ups.
 ## Enquanto uma pergunta longa está na tela, os pop-ups aparecem mais devagar.
 
-@export var score_for_max: float = 40.0       # pontos para chegar à dificuldade máxima
+@export var score_for_max: float = 1000.0       # pontos para chegar à dificuldade máxima
 @export var seconds_for_max: float = 300.0    # tempo para chegar à dificuldade máxima
 @export_range(0.0, 1.0) var score_weight: float = 0.6
 

@@ -19,6 +19,9 @@ const TIME_PER_COST: float = 3.0
 const EXTRA_TIME: Dictionary = {Mode.KEYWORD: 0.0, Mode.PIECE: 2.0, Mode.CLAUSE: 5.0, Mode.FULL: 10.0}
 const TIME_PER_TYPED_CHAR: float = 0.35
 const LONG_COST: int = 8
+# Pontos por acerto = POINTS_PER_COST × custo da consulta × multiplicador do tipo de lacuna.
+const POINTS_PER_COST: int = 10
+const POINTS_MULTIPLIER: Dictionary = {Mode.KEYWORD: 1.0, Mode.PIECE: 1.5, Mode.CLAUSE: 2.5, Mode.FULL: 4.0}
 
 var tree: SqlStatement
 var table: SqlTable
@@ -80,6 +83,11 @@ func revealed_sql() -> String:
 ## SQL completo com o texto do jogador na lacuna.
 func full_answer(player_text: String) -> String:
 	return "%s %s %s" % [prefix_text(), player_text, suffix_text()]
+
+
+## Pontos que esta pergunta vale se for respondida certo.
+func points() -> int:
+	return roundi(POINTS_PER_COST * tree.cost() * POINTS_MULTIPLIER[mode])
 
 
 ## Perguntas longas aliviam os pop-ups (ver DifficultyDirector).

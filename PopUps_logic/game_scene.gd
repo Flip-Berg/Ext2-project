@@ -1,10 +1,5 @@
 extends Node2D
 
-# Pontos por ação. Provisório: ajuste aqui quando as regras de pontuação forem definidas.
-const PONTOS_POPUP_FECHADO: int = 1
-const PONTOS_PET_ALIMENTADO: int = 1
-const PONTOS_SQL_CORRETA: int = 1
-
 @onready var life_manager: LifeManager = $LifeManager
 @onready var pet: PetController = $Pet
 @onready var manager_pop = $ManagerPop
@@ -20,9 +15,8 @@ func _ready() -> void:
 	minigame.director = director
 
 	pet.feeding_missed.connect(_on_pet_feeding_missed)
-	pet.fed.connect(PlayerData.add_points.bind(PONTOS_PET_ALIMENTADO))
-	manager_pop.popup_closed.connect(PlayerData.add_points.bind(PONTOS_POPUP_FECHADO))
-	minigame.resposta_correta.connect(PlayerData.add_points.bind(PONTOS_SQL_CORRETA))
+	# Só o SQL dá pontos (ver SqlQuestion.points()); pop-ups e pet só tiram vidas.
+	minigame.resposta_correta.connect(PlayerData.add_points)
 	minigame.tempo_esgotado.connect(_on_sql_tempo_esgotado)
 	life_manager.dead.connect(_on_dead)
 
