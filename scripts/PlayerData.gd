@@ -3,7 +3,8 @@ extends Node
 const SAVE_PATH: String = "user://player_data.json"
 const LEADERBOARD_SIZE: int = 10
 
-# Preenchem as vagas vazias do placar (de 999 a 50 pts). Nunca são salvas.
+# Placar padrão (de 999 a 50 pts): uma pontuação real só aparece se passar algum deles.
+# Nunca são salvos.
 const PLACEHOLDER_ENTRIES: Array = [
 	{"name": "root", "score": 999},
 	{"name": "admin", "score": 850},
@@ -63,7 +64,8 @@ func submit_score() -> Dictionary:
 	save_data()
 	return entry if index < LEADERBOARD_SIZE else {}
 
-## As 10 linhas para mostrar: entradas reais + placeholders nas vagas que faltam.
+## As 10 linhas para mostrar: o top 10 entre as entradas reais e todos os placeholders,
+## então pontuações reais abaixo do último placeholder não aparecem.
 ## Cada linha tem "name", "score", "placeholder" e "highlight" (a entrada `highlight`).
 func get_leaderboard_display(highlight: Dictionary = {}) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
@@ -74,8 +76,7 @@ func get_leaderboard_display(highlight: Dictionary = {}) -> Array[Dictionary]:
 			"placeholder": false,
 			"highlight": is_same(entry, highlight),
 		})
-	for i in LEADERBOARD_SIZE - rows.size():
-		var fake: Dictionary = PLACEHOLDER_ENTRIES[i]
+	for fake in PLACEHOLDER_ENTRIES:
 		rows.append({"name": fake["name"], "score": fake["score"], "placeholder": true, "highlight": false})
 
 	# Em empate, a entrada real fica acima do placeholder.
@@ -83,7 +84,7 @@ func get_leaderboard_display(highlight: Dictionary = {}) -> Array[Dictionary]:
 		if a["score"] != b["score"]:
 			return a["score"] > b["score"]
 		return not a["placeholder"] and b["placeholder"])
-	return rows
+	return rows.slice(0, LEADERBOARD_SIZE)
 
 func save_data() -> void:
 	var data: Dictionary = {
