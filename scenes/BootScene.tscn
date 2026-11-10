@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c7i23dxourni6"]
 
 [ext_resource type="Script" uid="uid://cqknv6vlo7313" path="res://scripts/bootscene.gd" id="1_j6d0a"]
-[ext_resource type="PackedScene" uid="uid://opjwrl17rrc8" path="res://scenes/LoginScene.tscn" id="2_11n6c"]
 [ext_resource type="Texture2D" uid="uid://byc6quyy4j048" path="res://assets/images/logo1.png" id="2_uxwki"]
 [ext_resource type="AudioStream" uid="uid://dq28pabqvdkqg" path="res://assets/audios/OPHD.ogg" id="3_11n6c"]
 [ext_resource type="AudioStream" uid="uid://dqy5bc2yjp2lp" path="res://assets/audios/OPHD2.ogg" id="4_xg3o2"]
@@ -14,7 +13,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j6d0a")
-loginscene = ExtResource("2_11n6c")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=912257380]
 layout_mode = 1

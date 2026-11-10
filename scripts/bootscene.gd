@@ -5,7 +5,6 @@ extends Control
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var audio_stream_player_2: AudioStreamPlayer = $AudioStreamPlayer2
 
-@export var loginscene: PackedScene 
 
 func _ready() -> void:
 	# Configurações iniciais dos elementos
