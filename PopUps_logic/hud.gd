@@ -6,6 +6,7 @@ const HEART_SIZE:= Vector2(48,48)
 # LivesLabel ainda não existe no GameScene; fica null até ser criado (tela de game over).
 @onready var lives_label: Label = get_node_or_null("LivesLabel")
 @onready var life_manager: LifeManager = $"../LifeManager"
+@onready var score_label: Label = $ScoreLabel
 
 
 func _ready() -> void:
@@ -13,6 +14,12 @@ func _ready() -> void:
 	#life_manager.dead.connect(_on_dead)
 
 	_update_lives(life_manager.current_lives)
+	PlayerData.score_changed.connect(_on_score_changed)
+	_on_score_changed(PlayerData.current_score)
+
+
+func _on_score_changed(score: int) -> void:
+	score_label.text = "%d pts" % score
 
 
 func _on_life_lost(current_lives: int) -> void:

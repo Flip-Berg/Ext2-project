@@ -17,6 +17,8 @@ const PLACEHOLDER_ENTRIES: Array = [
 	{"name": "Dev_Anonimo", "score": 10},
 ]
 
+signal score_changed(score: int)
+
 var player_name: String = "Dev_Anonimo"
 var current_score: int = 0
 var high_score: int = 0
@@ -36,9 +38,11 @@ func set_player_name(new_name: String) -> void:
 ## Zera a pontuação no começo de cada partida.
 func start_run() -> void:
 	current_score = 0
+	score_changed.emit(current_score)
 
 func add_points(points: int) -> void:
 	current_score += points
+	score_changed.emit(current_score)
 
 ## Salva a pontuação da partida no placar e devolve a entrada criada
 ## (ou um dicionário vazio se ela não entrou no top 10).

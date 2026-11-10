@@ -46,6 +46,16 @@ script = ExtResource("8_uhh3t")
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="ScoreLabel" type="Label" parent="HUD"]
+offset_left = 168.0
+offset_right = 368.0
+offset_bottom = 48.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30
+text = "0 pts"
+vertical_alignment = 1
+
 [node name="Node2D" parent="." unique_id=649769624 instance=ExtResource("9_ii616")]
 offset_left = 385.0
 offset_top = 218.0
