@@ -4,7 +4,7 @@ extends Node2D
 @export var emails: Array[String] = []
 @export var fade_time: float = 0.12
 
-@onready var food: Food = $Food
+@onready var letter: Letter = $Letter
 @onready var text: Label = $Email  
 
 var index: int = -1

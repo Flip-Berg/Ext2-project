@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://c4brux1e18y0h"]
 
-[ext_resource type="Script" uid="uid://dcdmqopfx177t" path="res://PET/pet/food.gd" id="1_wjo2h"]
+[ext_resource type="Script" uid="uid://dcdmqopfx177t" path="res://PET/pet/letter.gd" id="1_wjo2h"]
 [ext_resource type="Texture2D" uid="uid://bg8mcl38d72j2" path="res://PET/sprites/icone_carta.png" id="2_wjo2h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qb8ss"]
 size = Vector2(59, 42)
 
-[node name="Food" type="Area2D" unique_id=1432356105]
+[node name="Letter" type="Area2D" unique_id=1432356105]
 script = ExtResource("1_wjo2h")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2100240291]

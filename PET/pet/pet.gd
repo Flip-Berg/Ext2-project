@@ -23,7 +23,7 @@ var state: State = State.SLEEPING
 @onready var wake_timer: Timer = $WakeTimer
 @onready var feed_timer: Timer = $FeedTimer
 @onready var mail_bar: Mail = $Mail
-@onready var food: Food = mail_bar.food
+@onready var letter: Letter = mail_bar.letter
 @onready var damage_timer: Timer = $DamageTimer
 @onready var pet: Sprite2D = $PetSprite
 @onready var feeding_zone: Area2D = $FeedingZone
@@ -37,7 +37,7 @@ func _ready() -> void:
 	wake_timer.timeout.connect(_on_wake_timer_timeout)
 	feed_timer.timeout.connect(_on_feeding_timer_timeout)
 	damage_timer.timeout.connect(_on_damage_timer_timeout)
-	food.dropped.connect(_on_food_dropped)
+	letter.dropped.connect(_on_letter_dropped)
 	fed.connect(mail_bar._show_next)
  
 	_enter_sleeping()
@@ -46,36 +46,36 @@ func stop() -> void:
 	wake_timer.stop()
 	feed_timer.stop()
 	damage_timer.stop()
-	food.set_draggable(false)
+	letter.set_draggable(false)
 
 func _enter_awake() -> void:
 	state = State.AWAKE
 	pet.texture = sprite_awake
-	food.set_draggable(true)
+	letter.set_draggable(true)
 	feed_timer.start(feed_window)
 	
 func _enter_sleeping() -> void:
 	state = State.SLEEPING
 	pet.texture = sprite_sleeping
-	food.set_draggable(false)
+	letter.set_draggable(false)
 	wake_timer.start(randf_range(min_sleeping, max_sleeping))
 
 func _enter_starved() -> void:
 	state = State.STARVED
 	pet.texture = sprite_damage
-	food.set_draggable(false)
+	letter.set_draggable(false)
 	damage_timer.start(damage_time)
 	feeding_missed.emit()
 	
-func _on_food_dropped() -> void:
-	if state == State.AWAKE and feeding_zone.overlaps_area(food):
+func _on_letter_dropped() -> void:
+	if state == State.AWAKE and feeding_zone.overlaps_area(letter):
 		feed_timer.stop()
-		food.return_home()
+		letter.return_home()
 		fed.emit()
 		som_dormiu.play()
 		_enter_sleeping()
 	else:
-		food.return_home()
+		letter.return_home()
 
 func _on_wake_timer_timeout() -> void:
 	som_acordou.play()

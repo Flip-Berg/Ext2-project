@@ -1,4 +1,4 @@
-class_name Food
+class_name Letter
 extends Area2D
 
 signal dropped
