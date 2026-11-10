@@ -3,7 +3,8 @@ extends CanvasLayer
 const HEART_TEXTURE: Texture2D = preload("res://PopUps_logic/sprites/coracao.png")
 const HEART_SIZE:= Vector2(48,48)
 @onready var lives_container: HBoxContainer = $LivesContainer 
-@onready var lives_label: Label = $LivesLabel
+# LivesLabel ainda não existe no GameScene; fica null até ser criado (tela de game over).
+@onready var lives_label: Label = get_node_or_null("LivesLabel")
 @onready var life_manager: LifeManager = $"../LifeManager"
 
 
