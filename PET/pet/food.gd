@@ -26,22 +26,36 @@ func _process(_delta: float) -> void:
 		global_position = get_global_mouse_position() + _grab_offset
 
 
+# Usa _input (e não _input_event) porque o Panel do minigame SQL fica por cima
+# da carta e bloquearia o picking de física. Em troca, precisamos ignorar
+# manualmente os cliques que caem em cima de um pop-up.
 func _input(event: InputEvent) -> void:
 	if not (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
 		return
 	if event.pressed:
-		if _draggable and not _dragging and _is_mouse_over():
+		if _draggable and not _dragging and _is_event_over(event) and not _is_covered_by_popup():
 			_start_drag()
+			get_viewport().set_input_as_handled()
 	elif _dragging:
 		_dragging = false
 		z_index = _original_z_index
 		dropped.emit()
+		get_viewport().set_input_as_handled()
 
 
-func _is_mouse_over() -> bool:
-	var size: Vector2 = (_shape.shape as RectangleShape2D).size
-	var local_pos: Vector2 = _shape.to_local(get_global_mouse_position())
-	return Rect2(-size / 2.0, size).has_point(local_pos)
+func _is_event_over(event: InputEvent) -> bool:
+	var local_pos: Vector2 = _shape.make_input_local(event).position
+	return _shape.shape.get_rect().has_point(local_pos)
+
+
+# Um pop-up aberto por cima da carta deve receber o clique, não a carta.
+func _is_covered_by_popup() -> bool:
+	var node: Node = get_viewport().gui_get_hovered_control()
+	while node != null:
+		if node is BasePop:
+			return true
+		node = node.get_parent()
+	return false
 
 
 func set_draggable(value: bool) -> void:
