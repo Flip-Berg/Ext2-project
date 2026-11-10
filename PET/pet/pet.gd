@@ -22,11 +22,11 @@ var state: State = State.SLEEPING
 
 @onready var wake_timer: Timer = $WakeTimer
 @onready var feed_timer: Timer = $FeedTimer
-@onready var mail_bar: Mail = $Mail  # Corrigido de Mail para MailBar
+@onready var mail_bar: Mail = $Mail
 @onready var food: Food = mail_bar.food
 @onready var damage_timer: Timer = $DamageTimer
 @onready var pet: Sprite2D = $PetSprite
-@onready var feeding_zone: Area2D = $FeedingZone  # Adicionado Area2D que faltava
+@onready var feeding_zone: Area2D = $FeedingZone
 @onready var som_dormiu: AudioStreamPlayer = $DormiuSom
 @onready var som_acordou: AudioStreamPlayer = $AcordouSom
 

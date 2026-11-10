@@ -16,10 +16,6 @@ script = ExtResource("1_jatmv")
 sprite_sleeping = ExtResource("2_2h66o")
 sprite_awake = ExtResource("3_jqbgo")
 sprite_damage = ExtResource("1_t6svn")
-min_sleeping = null
-max_sleeping = null
-penis = null
-damage_time = null
 
 [node name="PetSprite" type="Sprite2D" parent="." unique_id=487522264]
 scale = Vector2(0.6442105, 0.54782605)
