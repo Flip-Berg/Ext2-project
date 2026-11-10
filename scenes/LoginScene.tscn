@@ -47,6 +47,7 @@ offset_right = 164.0
 offset_bottom = -523.0
 grow_horizontal = 2
 grow_vertical = 0
+text = ">"
 
 [node name="HighScoreLabel" type="Label" parent="Panel" unique_id=199481131]
 layout_mode = 0
