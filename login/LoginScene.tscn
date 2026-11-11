@@ -2,48 +2,13 @@
 
 [ext_resource type="Script" uid="uid://3ywb6s4svyxg" path="res://login/loginscene.gd" id="1_jved0"]
 [ext_resource type="Texture2D" uid="uid://c1qhwysqw3htx" path="res://login/art/Login.png" id="2_login"]
+[ext_resource type="Texture2D" path="res://login/art/Easy.png" id="3_verde"]
+[ext_resource type="Texture2D" path="res://login/art/Medium.png" id="4_amarela"]
+[ext_resource type="Texture2D" path="res://login/art/Hard.png" id="5_vermelha"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nome"]
 content_margin_left = 24.0
 content_margin_right = 24.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_botao"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_botao_hover"]
-bg_color = Color(1, 1, 1, 0.15)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.1, 0.1, 0.1, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_botao_pressed"]
-bg_color = Color(0, 0, 0, 0.2)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.1, 0.1, 0.1, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_botao_focus"]
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.05, 0.28, 0.63, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
 
 [node name="LoginScene" type="Control" unique_id=979751267]
 layout_mode = 3
@@ -106,44 +71,44 @@ text = "Recorde Atual: 0 pts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="FacilButton" type="Button" parent="Janela"]
+[node name="FacilButton" type="TextureButton" parent="Janela"]
 layout_mode = 0
-offset_left = 515.0
-offset_top = 557.0
-offset_right = 615.0
-offset_bottom = 657.0
-tooltip_text = "Fácil"
+offset_left = 514.0
+offset_top = 556.0
+offset_right = 616.0
+offset_bottom = 658.0
+tooltip_text = "Fácil (com tutorial)"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_botao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_botao_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_botao_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_botao_focus")
-flat = true
+texture_pressed = ExtResource("3_verde")
+texture_hover = ExtResource("3_verde")
+texture_focused = ExtResource("3_verde")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="MedioButton" type="Button" parent="Janela"]
+[node name="MedioButton" type="TextureButton" parent="Janela"]
 layout_mode = 0
-offset_left = 668.0
-offset_top = 557.0
-offset_right = 768.0
-offset_bottom = 657.0
+offset_left = 667.0
+offset_top = 556.0
+offset_right = 769.0
+offset_bottom = 658.0
 tooltip_text = "Médio"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_botao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_botao_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_botao_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_botao_focus")
-flat = true
+texture_pressed = ExtResource("4_amarela")
+texture_hover = ExtResource("4_amarela")
+texture_focused = ExtResource("4_amarela")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="DificilButton" type="Button" parent="Janela"]
+[node name="DificilButton" type="TextureButton" parent="Janela"]
 layout_mode = 0
-offset_left = 821.0
-offset_top = 557.0
-offset_right = 921.0
-offset_bottom = 657.0
+offset_left = 820.0
+offset_top = 556.0
+offset_right = 922.0
+offset_bottom = 658.0
 tooltip_text = "Difícil"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_botao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_botao_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_botao_pressed")
-theme_override_styles/focus = SubResource("StyleBoxFlat_botao_focus")
-flat = true
+texture_pressed = ExtResource("5_vermelha")
+texture_hover = ExtResource("5_vermelha")
+texture_focused = ExtResource("5_vermelha")
+ignore_texture_size = true
+stretch_mode = 0
