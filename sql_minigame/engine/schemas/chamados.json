@@ -1,0 +1,17 @@
+{
+	"table": "chamados",
+	"singular": "chamado",
+	"plural": "chamados",
+	"gender": "m",
+	"columns": [
+		{"name": "assunto", "type": "text", "pt": "assunto", "gender": "m", "editable": false,
+		 "values": ["Impressora", "Senha", "Rede", "Email", "Cafeteira"]},
+		{"name": "status", "type": "text", "pt": "status", "gender": "m", "editable": true,
+		 "values": ["aberto", "pendente", "fechado"]},
+		{"name": "prioridade", "type": "number", "pt": "prioridade", "gender": "f", "editable": true,
+		 "min": 1, "max": 5, "step": 1},
+		{"name": "abertura", "type": "date", "pt": "data de abertura", "gender": "f", "editable": false,
+		 "min": "2025-01-01", "max": "2026-11-01",
+		 "phrases": {">": "abertos depois de {v}", "<": "abertos antes de {v}", ">=": "abertos a partir de {v}", "<=": "abertos até {v}"}}
+	]
+}
