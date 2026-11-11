@@ -9,6 +9,11 @@ extends Node
 @export_range(0.0, 1.0) var score_weight: float = 0.6
 ## Nível inicial para cada dificuldade escolhida no login (fácil, médio, difícil).
 @export var start_levels: Array[float] = [0.0, 0.2, 0.4]
+## Multiplica o tempo de cada pergunta (fácil, médio, difícil). Fácil e médio dão
+## mais tempo para pensar na consulta; o difícil é o jogo sem ajuda.
+@export var time_scales: Array[float] = [1.5, 1.5, 1.0]
+## Multiplica o intervalo entre pop-ups (fácil, médio, difícil): maior = menos pop-ups.
+@export var popup_interval_scales: Array[float] = [1.5, 1.5, 1.0]
 
 @export_group("SQL")
 @export var min_budget: int = 3
@@ -30,6 +35,11 @@ var long_question_active: bool = false
 
 func _process(delta: float) -> void:
 	elapsed += delta
+
+
+## Quanto tempo a mais (ou a menos) cada pergunta tem nesta dificuldade.
+func time_scale() -> float:
+	return _for_difficulty(time_scales)
 
 
 func level() -> float:
@@ -60,4 +70,8 @@ func popup_interval_range() -> Vector2:
 	var interval := Vector2(popup_min_interval, maxf(max_interval, popup_min_interval))
 	if long_question_active:
 		interval *= long_question_slowdown
-	return interval
+	return interval * _for_difficulty(popup_interval_scales)
+
+
+func _for_difficulty(values: Array[float]) -> float:
+	return values[clampi(PlayerData.starting_difficulty, 0, values.size() - 1)]

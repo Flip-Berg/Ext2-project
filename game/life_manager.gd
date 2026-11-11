@@ -11,6 +11,8 @@ signal dead
 @export var max_lifes: int = 7
 
 var current_lives: int = 0
+## Enquanto true (tutorial), errar não custa vida.
+var invulnerable: bool = false
 
 
 func _ready() -> void:
@@ -18,7 +20,7 @@ func _ready() -> void:
 
 
 func lose_life() -> void:
-	if current_lives <= 0:
+	if current_lives <= 0 or invulnerable:
 		return
 
 	current_lives -= 1

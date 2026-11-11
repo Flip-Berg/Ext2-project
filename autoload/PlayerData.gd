@@ -25,11 +25,22 @@ var current_score: int = 0
 ## Dificuldade escolhida no login (0 fácil, 1 médio, 2 difícil). Não é salva.
 var starting_difficulty: int = 0
 var high_score: int = 0
+## Se o jogador já terminou o tutorial alguma vez.
+var tutorial_done: bool = false
 # Só entradas reais, da maior para a menor pontuação, no máximo LEADERBOARD_SIZE.
 var leaderboard: Array[Dictionary] = []
 
 func _ready() -> void:
 	load_data()
+
+## O tutorial roda no fácil e na primeira vez que alguém joga (save vazio:
+## nenhuma partida terminada e tutorial nunca concluído).
+func needs_tutorial() -> bool:
+	return starting_difficulty == 0 or (leaderboard.is_empty() and not tutorial_done)
+
+func finish_tutorial() -> void:
+	tutorial_done = true
+	save_data()
 
 func set_player_name(new_name: String) -> void:
 	if new_name.strip_edges() != "":
@@ -93,6 +104,7 @@ func save_data() -> void:
 		"player_name": player_name,
 		"high_score": high_score,
 		"leaderboard": leaderboard,
+		"tutorial_done": tutorial_done,
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -114,6 +126,7 @@ func load_data() -> void:
 			var data: Dictionary = json.get_data()
 			player_name = data.get("player_name", "Dev_Anonimo")
 			high_score = int(data.get("high_score", 0))
+			tutorial_done = bool(data.get("tutorial_done", false))
 
 			leaderboard.clear()
 			for entry in data.get("leaderboard", []):

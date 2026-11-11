@@ -42,6 +42,18 @@ func _ready() -> void:
  
 	_enter_sleeping()
 
+## Volta a dormir e a acordar sozinho (depois de stop()).
+func resume() -> void:
+	_enter_sleeping()
+
+## Acorda agora, com `window` segundos para receber a carta (tutorial).
+func wake_up(window: float = feed_window) -> void:
+	wake_timer.stop()
+	damage_timer.stop()
+	som_acordou.play()
+	_enter_awake()
+	feed_timer.start(window)
+
 func stop() -> void:
 	wake_timer.stop()
 	feed_timer.stop()

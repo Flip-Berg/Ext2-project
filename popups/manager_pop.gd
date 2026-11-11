@@ -16,6 +16,8 @@ signal popup_closed
 @export var regression: float = 0.03
 
 var game: float = 0.0
+## Desligado (tutorial), nenhum pop-up aparece sozinho; spawn_one() ainda funciona.
+var active: bool = true
 
 ## Definido pela GameScene. Sem ele, usa o ritmo antigo baseado só no tempo.
 var director: DifficultyDirector
@@ -34,7 +36,22 @@ func _process(delta: float) -> void:
 	game += delta
 
 
+func set_active(value: bool) -> void:
+	active = value
+	if active:
+		_reset_timer()
+	else:
+		timer.stop()
+
+
+## Abre um pop-up agora (o tutorial usa para o jogador treinar).
+func spawn_one() -> BasePop:
+	return _spawn_popup(static_popup)
+
+
 func _reset_timer() -> void:
+	if not active:
+		return
 	if director != null:
 		var interval := director.popup_interval_range()
 		timer.wait_time = randf_range(interval.x, interval.y)

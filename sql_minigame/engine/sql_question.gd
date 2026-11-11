@@ -46,6 +46,38 @@ static func create(p_tree: SqlStatement, p_mode: Mode, rng: RandomNumberGenerato
 	return q
 
 
+## Pergunta com uma lacuna escolhida à mão (tutorial): `answer` é o trecho do SQL
+## que o jogador tem que escrever, igual a como ele aparece em tree.to_sql().
+## O SQL inteiro vira uma pergunta FULL. Devolve null se o trecho não existir.
+static func with_answer(p_tree: SqlStatement, answer: String) -> SqlQuestion:
+	var q := SqlQuestion.new()
+	q.tree = p_tree
+	q.table = p_tree.table
+	q.prompt = p_tree.to_pt(p_tree.table)
+	q.tokens = p_tree.to_tokens()
+	var found := false
+	for start in q.tokens.size():
+		for end in range(start + 1, q.tokens.size() + 1):
+			if SqlNode.join_tokens(q.tokens.slice(start, end)) == answer:
+				q.blank_start = start
+				q.blank_end = end
+				found = true
+				break
+		if found:
+			break
+	if not found:
+		return null
+	if q.blank_start == 0 and q.blank_end == q.tokens.size():
+		q.mode = Mode.FULL
+	elif q.blank_end - q.blank_start == 1:
+		q.mode = Mode.KEYWORD if q.tokens[q.blank_start]["role"] == SqlNode.KEYWORD else Mode.PIECE
+	else:
+		q.mode = Mode.CLAUSE
+	q.time_limit = BASE_TIME + TIME_PER_COST * p_tree.cost() + EXTRA_TIME[q.mode] \
+		+ TIME_PER_TYPED_CHAR * q.answer_text().length()
+	return q
+
+
 ## SQL mostrado na tela, com a lacuna.
 func shown_sql() -> String:
 	if mode == Mode.FULL:
