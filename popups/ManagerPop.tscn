@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cpne21pgva434"]
+
+[ext_resource type="AudioStream" uid="uid://u2m8uawmukp7" path="res://shared/audio/vine-boom-sound-effect_KT89XIq.mp3" id="1_i7gyn"]
+[ext_resource type="AudioStream" uid="uid://bdk1mejh7jykj" path="res://popups/audio/connect.mp3" id="2_nm5cu"]
+
+[node name="ManagerPop" type="CanvasLayer" unique_id=1945478739]
+
+[node name="DanoSom" type="AudioStreamPlayer" parent="." unique_id=980257592]
+stream = ExtResource("1_i7gyn")
+
+[node name="AbreSom" type="AudioStreamPlayer" parent="." unique_id=648508393]
+stream = ExtResource("2_nm5cu")
+volume_db = 6.7

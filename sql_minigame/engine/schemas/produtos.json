@@ -1,0 +1,17 @@
+{
+	"table": "produtos",
+	"singular": "produto",
+	"plural": "produtos",
+	"gender": "m",
+	"columns": [
+		{"name": "nome", "type": "text", "pt": "nome", "gender": "m", "like": true, "editable": false,
+		 "values": ["Teclado", "Mouse", "Monitor", "Cadeira", "Headset", "Webcam", "Cafe", "Caneca", "Mesa", "Notebook"]},
+		{"name": "categoria", "type": "text", "pt": "categoria", "gender": "f", "editable": true,
+		 "values": ["Perifericos", "Moveis", "Copa", "Computadores"]},
+		{"name": "preco", "type": "number", "pt": "preço", "gender": "m", "editable": true,
+		 "min": 10, "max": 2000, "step": 10,
+		 "phrases": {">": "que custam mais de {v}", "<": "que custam menos de {v}", ">=": "que custam {v} ou mais", "<=": "que custam até {v}"}},
+		{"name": "estoque", "type": "number", "pt": "estoque", "gender": "m", "editable": true,
+		 "min": 0, "max": 200, "step": 5}
+	]
+}

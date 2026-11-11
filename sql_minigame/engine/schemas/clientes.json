@@ -1,0 +1,19 @@
+{
+	"table": "clientes",
+	"singular": "cliente",
+	"plural": "clientes",
+	"gender": "m",
+	"columns": [
+		{"name": "nome", "type": "text", "pt": "nome", "gender": "m", "like": true, "editable": false,
+		 "values": ["Ana", "Bruno", "Carla", "Diego", "Elisa", "Felipe", "Gabriela", "Heitor", "Isabela", "Joao", "Karina", "Lucas", "Marina", "Nicolas", "Olivia", "Pedro", "Rafaela", "Sofia", "Tiago", "Vitoria"]},
+		{"name": "cidade", "type": "text", "pt": "cidade", "gender": "f", "editable": true,
+		 "values": ["Fortaleza", "Recife", "Natal", "Salvador", "Teresina"]},
+		{"name": "plano", "type": "text", "pt": "plano", "gender": "m", "editable": true,
+		 "values": ["Gratis", "Pro", "Empresa"]},
+		{"name": "saldo", "type": "number", "pt": "saldo", "gender": "m", "editable": true,
+		 "min": 0, "max": 5000, "step": 50},
+		{"name": "cadastro", "type": "date", "pt": "data de cadastro", "gender": "f", "editable": false,
+		 "min": "2018-01-01", "max": "2026-06-30",
+		 "phrases": {">": "cadastrados depois de {v}", "<": "cadastrados antes de {v}", ">=": "cadastrados a partir de {v}", "<=": "cadastrados até {v}"}}
+	]
+}
