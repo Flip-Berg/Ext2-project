@@ -1,22 +1,38 @@
+
 class_name LifeManager
 extends Node
 
-signal life_lost(current_lifes:int)
+signal life_lost(current_lives: int)
+signal life_gained(current_lives: int)
 signal dead
 
-var current_lives: int
-var max_lifes=3
+# Comeca com 3, mas pode chegar a 7 vidas
+@export var initial_lives: int = 3
+@export var max_lifes: int = 7
+
+var current_lives: int = 0
+
 
 func _ready() -> void:
-	current_lives= max_lifes
-	
-func lose_life()->void :
-	if current_lives<=0:
+	current_lives = mini(initial_lives, max_lifes)
+
+
+func lose_life() -> void:
+	if current_lives <= 0:
 		return
-	
-	current_lives-=1
+
+	current_lives -= 1
 	life_lost.emit(current_lives)
-	
-	if current_lives<=0:
-		# A GameScene mostra a tela de game over ao receber este sinal.
+
+	if current_lives <= 0:
 		dead.emit()
+
+
+# Recupera uma vida, respeitando o limite
+func gain_life() -> bool:
+	if current_lives >= max_lifes:
+		return false
+
+	current_lives += 1
+	life_gained.emit(current_lives)
+	return true
