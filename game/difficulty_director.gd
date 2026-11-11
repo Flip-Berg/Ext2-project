@@ -17,8 +17,6 @@ extends Node
 @export var piece_from: float = 0.25
 @export var clause_from: float = 0.5
 @export var full_from: float = 0.8
-## Até que nível o autocomplete também sugere palavras-chave.
-@export var keyword_help_until: float = 0.4
 
 @export_group("Pop-ups")
 @export var popup_min_interval: float = 5.0
@@ -54,10 +52,6 @@ func blank_mode() -> int:
 	if l >= piece_from:
 		return SqlQuestion.Mode.PIECE
 	return SqlQuestion.Mode.KEYWORD
-
-
-func keyword_suggestions() -> bool:
-	return level() < keyword_help_until
 
 
 ## Intervalo (mín, máx) em segundos até o próximo pop-up.

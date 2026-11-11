@@ -20,9 +20,11 @@ const COR_NUMERO: Color = Color("#bf360c")
 const COR_SIMBOLO: Color = Color("#37474f")
 const COR_ACERTO: Color = Color("#1b5e20")
 const COR_ERRO: Color = Color("#b71c1c")
+const COR_LACUNA: Color = Color("#212121")
+const FUNDO_RESPOSTA: Color = Color("#fff176")  # marca-texto na resposta revelada
 const TIPOS_PT: Dictionary = {"number": "número", "text": "texto", "date": "data"}
 
-@onready var texto_objetivo: Label = $TextoObjetivo
+@onready var texto_objetivo: RichTextLabel = $TextoObjetivo
 @onready var entrada_jogador: CodeEdit = $EntradaJogador
 @onready var label_pseudocodigo: Label = $LabelPseudocodigo
 @onready var barra_tempo: ProgressBar = $BarraTempo
@@ -68,6 +70,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if rodada_finalizada or _pergunta == null:
 		return
+	_manter_foco()
 	tempo_restante = maxf(tempo_restante - delta, 0.0)
 	barra_tempo.value = tempo_restante / _pergunta.time_limit * 100.0
 	if tempo_restante <= 0.0:
@@ -83,7 +86,7 @@ func nova_query() -> void:
 	if _pergunta.mode == SqlQuestion.Mode.FULL:
 		texto_objetivo.text = "Escreva a consulta completa."
 	else:
-		texto_objetivo.text = _pergunta.shown_sql()
+		texto_objetivo.text = _sql_bbcode(false)
 	painel_schema.text = _schema_bbcode(_pergunta.table)
 	_atualizar_destaque(_pergunta.table)
 
@@ -140,9 +143,9 @@ func _erro_por_tempo() -> void:
 	tempo_esgotado.emit()
 	_piscar_tela(Color.DARK_RED)
 
-	# Mostra a consulta certa inteira, com a parte que faltava entre « ».
+	# Mostra a consulta certa inteira, com a parte que faltava marcada.
 	var certa := _pergunta.revealed_sql()
-	texto_objetivo.text = certa
+	texto_objetivo.text = _sql_bbcode(true)
 	var duracao := clampf(REVELACAO_MIN + certa.length() * REVELACAO_POR_CARACTERE, REVELACAO_MIN, REVELACAO_MAX)
 	_mostrar_feedback("TEMPO ESGOTADO! A resposta certa está acima. (Enter para continuar)", COR_ERRO, duracao)
 
@@ -208,21 +211,85 @@ func _on_texto_mudou() -> void:
 
 
 func _on_completion_requested() -> void:
-	if _pergunta == null or rodada_finalizada:
+	var coluna := entrada_jogador.get_caret_column()
+	# Com o cursor no começo da linha o CodeEdit não tem palavra para completar
+	# (e reclama no console se receber opções).
+	if _pergunta == null or rodada_finalizada or coluna == 0:
+		entrada_jogador.cancel_code_completion()
 		return
-	var linha := entrada_jogador.get_line(0).left(entrada_jogador.get_caret_column())
+	var linha := entrada_jogador.get_line(0).left(coluna)
 	var contexto := linha
 	if _pergunta.mode != SqlQuestion.Mode.FULL:
 		contexto = _pergunta.prefix_text() + " " + linha
-	var com_palavras_chave := director.keyword_suggestions() if director else true
-	for s in SqlAutocomplete.suggestions(contexto, _pergunta.table, com_palavras_chave):
+	for s in SqlAutocomplete.suggestions(contexto, _pergunta.table):
 		var tipo := CodeEdit.KIND_PLAIN_TEXT
+		var cor := COR_PALAVRA_CHAVE
 		match s["kind"]:
-			"table": tipo = CodeEdit.KIND_CLASS
-			"column": tipo = CodeEdit.KIND_MEMBER
-			"keyword": tipo = CodeEdit.KIND_CONSTANT
-		entrada_jogador.add_code_completion_option(tipo, s["text"], s["text"])
+			"table":
+				tipo = CodeEdit.KIND_CLASS
+				cor = COR_COLUNA
+			"column":
+				tipo = CodeEdit.KIND_MEMBER
+				cor = COR_COLUNA
+			"keyword":
+				tipo = CodeEdit.KIND_CONSTANT
+		entrada_jogador.add_code_completion_option(tipo, s["text"], s["text"], cor)
 	entrada_jogador.update_code_completion_options(true)
+
+
+## O campo de resposta fica focado o jogo todo: clicar no X de um pop-up tira o foco
+## (o botão some junto com o pop-up) e o jogador teria que clicar no campo de novo.
+## Só devolve o foco se nenhum outro controle estiver com ele.
+func _manter_foco() -> void:
+	if is_visible_in_tree() and get_viewport().gui_get_focus_owner() == null:
+		entrada_jogador.grab_focus()
+
+
+# --- SQL colorido (o enunciado com lacuna e a resposta revelada) ---
+
+## BBCode do SQL da pergunta com as mesmas cores do campo de resposta. Sem `revelar`,
+## a lacuna aparece como ____; com `revelar`, a parte que faltava vem marcada.
+func _sql_bbcode(revelar: bool) -> String:
+	var itens: Array[Dictionary] = []
+	for i in _pergunta.tokens.size():
+		var na_lacuna := i >= _pergunta.blank_start and i < _pergunta.blank_end
+		if na_lacuna and not revelar:
+			if i == _pergunta.blank_start:
+				itens.append({"text": SqlQuestion.BLANK, "role": "lacuna"})
+			continue
+		var item: Dictionary = _pergunta.tokens[i].duplicate()
+		item["resposta"] = na_lacuna
+		itens.append(item)
+
+	var out := ""
+	for i in itens.size():
+		var texto: String = itens[i]["text"]
+		# Mesmo espaçamento de SqlNode.join_tokens.
+		var espaco: bool = i > 0 and not texto in [",", ")"] and itens[i - 1]["text"] != "("
+		var pedaco := "[color=#%s]%s[/color]" % [_cor_do_token(itens[i]).to_html(false), texto.replace("[", "[lb]")]
+		if itens[i]["role"] == "lacuna":
+			pedaco = "[b]%s[/b]" % pedaco
+		if itens[i].get("resposta", false):
+			# O espaço entre duas partes da resposta também fica marcado.
+			if espaco and i > 0 and itens[i - 1].get("resposta", false):
+				pedaco = " " + pedaco
+				espaco = false
+			pedaco = "[bgcolor=#%s][b]%s[/b][/bgcolor]" % [FUNDO_RESPOSTA.to_html(false), pedaco]
+		out += (" " if espaco else "") + pedaco
+	return out
+
+
+func _cor_do_token(token: Dictionary) -> Color:
+	match token["role"]:
+		SqlNode.KEYWORD:
+			return COR_PALAVRA_CHAVE
+		SqlNode.TABLE, SqlNode.COLUMN:
+			return COR_COLUNA
+		SqlNode.VALUE:
+			return COR_TEXTO if String(token["text"]).begins_with("'") else COR_NUMERO
+		"lacuna":
+			return COR_LACUNA
+	return COR_SIMBOLO
 
 
 # --- painel do schema ---

@@ -112,15 +112,18 @@ theme_override_font_sizes/font_size = 22
 autowrap_mode = 3
 vertical_alignment = 1
 
-[node name="TextoObjetivo" type="Label" parent="." unique_id=1433850010]
+[node name="TextoObjetivo" type="RichTextLabel" parent="." unique_id=1433850010]
 layout_mode = 0
 offset_left = 472.0
 offset_top = 236.0
 offset_right = 1505.0
 offset_bottom = 346.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 22
-autowrap_mode = 3
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+bbcode_enabled = true
+scroll_active = false
 
 [node name="EntradaJogador" type="CodeEdit" parent="." unique_id=1949269435]
 layout_mode = 0
@@ -138,6 +141,8 @@ theme_override_colors/background_color = Color(0, 0, 0, 0)
 theme_override_colors/completion_background_color = Color(0.97, 0.97, 0.97, 1)
 theme_override_colors/completion_selected_color = Color(0.73, 0.87, 0.98, 1)
 theme_override_colors/completion_existing_color = Color(0.05, 0.28, 0.63, 0.25)
+theme_override_colors/completion_scroll_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/completion_scroll_hovered_color = Color(0.35, 0.35, 0.35, 1)
 theme_override_constants/completion_lines = 5
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_entrada")
