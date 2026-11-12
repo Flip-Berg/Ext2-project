@@ -23,6 +23,9 @@ var desafio_em_andamento: bool = false
 
 var recovery_challenge: Control
 
+## Fim de um desafio 6-7 (depois de o jogo voltar a rodar). O tutorial espera por ele.
+signal desafio_6_7_terminou(sucesso: bool)
+
 
 # ==========================================
 # INICIALIZACAO
@@ -73,7 +76,7 @@ func _preparar_tutorial() -> void:
 	pet.stop()
 	life_manager.invulnerable = true
 	tutorial.finished.connect(_comecar_partida)
-	tutorial.start.call_deferred(minigame, manager_pop, pet)
+	tutorial.start.call_deferred(minigame, manager_pop, pet, self)
 
 
 ## Fim do tutorial: começa a partida valendo, do zero.
@@ -86,6 +89,8 @@ func _comecar_partida() -> void:
 	pet.resume()
 	director.elapsed = 0.0
 	PlayerData.start_run()
+	# A vida ganha no treino do 6-7 não vale para a partida.
+	life_manager.reset_lives()
 	consultas_corretas = 0
 	tentativas_acumuladas = 0
 	hud.atualizar_tentativas(tentativas_acumuladas)
@@ -97,6 +102,12 @@ func _on_resposta_correta(pontos: int) -> void:
 		return
 	PlayerData.add_points(pontos)
 	_on_query_correta(pontos)
+
+
+## Dá uma oportunidade 6-7 sem precisar das 5 respostas (treino do tutorial).
+func ganhar_tentativa() -> void:
+	tentativas_acumuladas += 1
+	hud.atualizar_tentativas(tentativas_acumuladas)
 
 
 # ==========================================
@@ -209,6 +220,8 @@ func _on_desafio_finalizado(sucesso: bool) -> void:
 
 	if campo != null:
 		campo.call_deferred("grab_focus")
+
+	desafio_6_7_terminou.emit(sucesso)
 
 
 # ==========================================

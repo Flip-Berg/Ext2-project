@@ -2,7 +2,7 @@ class_name Tutorial
 extends CanvasLayer
 ## Tutorial do começo do jogo: lições de SQL com lacunas que crescem (uma palavra,
 ## depois trechos, depois a consulta inteira), sem tempo e sem perder vidas; depois
-## um treino de pop-up e um do pet. Ao terminar emite `finished` e a GameScene
+## um treino de pop-up, um do pet e um do 6-7 (farmar aura). Ao terminar emite `finished` e a GameScene
 ## começa a partida valendo.
 ##
 ## Roda no fácil e na primeira vez que alguém joga (PlayerData.needs_tutorial()).
@@ -32,7 +32,9 @@ const LICOES: Array[Dictionary] = [
 	{"sql": "SELECT nome FROM funcionarios WHERE setor = 'TI' AND salario > 4000", "resposta": "AND",
 	 "dica": "[b]AND[/b] (e) junta duas condições, e as duas precisam valer. Com [b]OR[/b] (ou), basta uma delas."},
 	{"sql": "SELECT nome FROM funcionarios WHERE setor IN ('TI', 'RH')", "resposta": "IN",
-	 "dica": "[b]IN[/b] (em) confere se o valor está numa lista: setor IN ('TI', 'RH')."},
+	 "dica": "[b]IN[/b] (em) filtra por [b]vários valores[/b] de uma vez: setor IN ('TI', 'RH') traz quem é do TI [b]ou[/b] do RH."},
+	{"sql": "SELECT nome FROM funcionarios WHERE setor IN ('Vendas', 'Suporte')", "resposta": "setor IN ('Vendas', 'Suporte')",
+	 "dica": "Agora escreva o filtro inteiro: a coluna, [b]IN[/b] e a lista de valores [b]entre parênteses[/b], separados por vírgula. É o mesmo que setor = 'Vendas' OR setor = 'Suporte', só que mais curto."},
 	{"sql": "SELECT nome, salario FROM funcionarios ORDER BY salario DESC", "resposta": "ORDER BY salario DESC",
 	 "dica": "[b]ORDER BY[/b] ordena o resultado por uma coluna. [b]DESC[/b] vai do maior para o menor; [b]ASC[/b], do menor para o maior."},
 	{"sql": "DELETE FROM funcionarios WHERE setor = 'Suporte'", "resposta": "DELETE",
@@ -61,7 +63,7 @@ const TEXTO_BOAS_VINDAS: String = """Aqui você vai aprender [b]SQL[/b], a lingu
 No tutorial não tem tempo nem vidas: pode errar à vontade!"""
 const TEXTO_FIM_SQL: String = """Você já sabe o básico de SQL!
 
-Mas o computador do biOS tem suas distrações. Antes de valer pontos, vamos ver as duas que vão atrapalhar você."""
+Mas o computador do biOS tem suas distrações. Antes de valer pontos, vamos ver as duas que vão atrapalhar você e um jeito de recuperar vidas."""
 const TEXTO_POPUPS: String = """Anúncios vão aparecer enquanto você trabalha. Feche cada um clicando na [b]carinha vermelha[/b] antes que ele suma sozinho: se ele sumir, você perde uma [b]vida[/b] (os corações lá em cima).
 
 Alguns andam pela tela e outros se multiplicam quando você clica!
@@ -78,7 +80,15 @@ Vamos acordar o Kiki agora."""
 const TEXTO_PET_FOME: String = """O Kiki ficou com fome. No jogo valendo, isso custaria uma vida.
 
 Arraste a carta da barra de e-mail até ele. Vamos tentar de novo!"""
-const TEXTO_FIM: String = """Agora é para valer: cada acerto dá pontos, as perguntas ficam mais difíceis conforme você joga e, ao perder as 3 vidas, o jogo acaba.
+const TEXTO_AURA: String = """A cada 5 respostas certas você pode [b]FARMAR AURA[/b], apertando [b]6[/b] e [b]7[/b] alternadamente, para recuperar uma vida perdida.
+
+Quando a chance aparecer, clique no botão [b]6-7[/b] na barra de baixo (o número mostra quantas chances você tem). Aperte 6, 7, 6, 7... até encher a barra antes que o tempo acabe. Dá para chegar a até 7 vidas.
+
+Vamos treinar: esta chance é por nossa conta!"""
+const TEXTO_AURA_FALHOU: String = """O tempo acabou antes de a barra encher. No jogo valendo, essa chance seria perdida.
+
+Tente de novo: 6, 7, 6, 7, bem rápido!"""
+const TEXTO_FIM: String = """Agora é para valer: cada acerto dá pontos, as perguntas ficam mais difíceis conforme você joga e, ao perder todas as vidas, o jogo acaba.
 
 Boa sorte!"""
 
@@ -87,6 +97,7 @@ var running: bool = false
 var _minigame: Node
 var _manager_pop: Node
 var _pet: PetController
+var _jogo: Node
 var _erros: int = 0
 var _licao_atual: int = 0
 
@@ -101,10 +112,11 @@ func _ready() -> void:
 	dialogo.hide()
 
 
-func start(minigame: Node, manager_pop: Node, pet: PetController) -> void:
+func start(minigame: Node, manager_pop: Node, pet: PetController, jogo: Node) -> void:
 	_minigame = minigame
 	_manager_pop = manager_pop
 	_pet = pet
+	_jogo = jogo
 	running = true
 
 	var pular := await _dialogo("Bem-vindo ao biOS!", TEXTO_BOAS_VINDAS, "Começar", "Pular tutorial")
@@ -113,6 +125,7 @@ func start(minigame: Node, manager_pop: Node, pet: PetController) -> void:
 		await _dialogo("Muito bem!", TEXTO_FIM_SQL, "Continuar")
 		await _treino_de_popup()
 		await _treino_do_pet()
+		await _treino_de_aura()
 		await _dialogo("Tudo pronto!", TEXTO_FIM, "Jogar")
 	_terminar()
 
@@ -177,6 +190,16 @@ func _treino_do_pet() -> void:
 		if alimentou:
 			return
 		await _dialogo("Quase!", TEXTO_PET_FOME, "Tentar de novo")
+
+
+func _treino_de_aura() -> void:
+	await _dialogo("Farmar aura", TEXTO_AURA, "Entendi")
+	while true:
+		_jogo.ganhar_tentativa()
+		var sucesso: bool = await _jogo.desafio_6_7_terminou
+		if sucesso:
+			return
+		await _dialogo("Quase!", TEXTO_AURA_FALHOU, "Tentar de novo")
 
 
 ## Espera o primeiro dos sinais (sem argumentos) e devolve o índice dele.
