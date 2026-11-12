@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3gv70i6m15o1"
-path="res://.godot/imported/pop-up-homens_solteiros-588x205.png-f7121432d0b790d520026c246cab4654.ctex"
+uid="uid://clvj2awytspdo"
+path="res://.godot/imported/pop up tarologa e janela.png-5b02f3779f5e0ee4ab88498e961d378c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://popups/art/ads/pop-up-homens_solteiros-588x205.png"
-dest_files=["res://.godot/imported/pop-up-homens_solteiros-588x205.png-f7121432d0b790d520026c246cab4654.ctex"]
+source_file="res://popups/art/ads/pop up tarologa e janela.png"
+dest_files=["res://.godot/imported/pop up tarologa e janela.png-5b02f3779f5e0ee4ab88498e961d378c.ctex"]
 
 [params]
 

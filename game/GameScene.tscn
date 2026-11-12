@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://dnwme4fh6qy43" path="res://sql_minigame/minigame_query.tscn" id="9_ii616"]
 [ext_resource type="PackedScene" uid="uid://csa024myscaoq" path="res://pet/PET.tscn" id="11_6nid3"]
 [ext_resource type="AudioStream" uid="uid://u2m8uawmukp7" path="res://shared/audio/vine-boom-sound-effect_KT89XIq.mp3" id="12_6nid3"]
+[ext_resource type="AudioStream" uid="uid://8aw06n6hgqs0" path="res://shared/audio/cat-laugh-meme-1.mp3" id="13_4jivt"]
+[ext_resource type="AudioStream" uid="uid://cwxdsrcscevwf" path="res://shared/audio/TIKI_TIKI_Slowed.mp3" id="14_p7qqe"]
 [ext_resource type="PackedScene" path="res://game/game_over/GameOverScreen.tscn" id="20_gameover"]
 [ext_resource type="Script" uid="uid://cqh6yaolapxhg" path="res://game/difficulty_director.gd" id="21_director"]
 [ext_resource type="PackedScene" path="res://game/tutorial/Tutorial.tscn" id="22_tutorial"]
@@ -77,9 +79,16 @@ autoplay = true
 [node name="DanoSom" type="AudioStreamPlayer" parent="." unique_id=516808967]
 stream = ExtResource("12_6nid3")
 
+[node name="GameOverSom" type="AudioStreamPlayer" parent="." unique_id=594730810]
+stream = ExtResource("13_4jivt")
+
+[node name="SixSevenSom" type="AudioStreamPlayer" parent="." unique_id=1251413791]
+stream = ExtResource("14_p7qqe")
+parameters/looping = true
+
 [node name="GameOverScreen" parent="." unique_id=2141882951 instance=ExtResource("20_gameover")]
 
 [node name="DifficultyDirector" type="Node" parent="." unique_id=399122493]
 script = ExtResource("21_director")
 
-[node name="Tutorial" parent="." instance=ExtResource("22_tutorial")]
+[node name="Tutorial" parent="." unique_id=875873195 instance=ExtResource("22_tutorial")]

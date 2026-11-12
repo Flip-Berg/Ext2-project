@@ -119,11 +119,9 @@ func _spawn_popup(
 	add_child(popup)
 
 	popup.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	popup.custom_minimum_size = popup_dimensions
-	popup.size = popup_dimensions
 
-	# Usa o tamanho real do popup depois de aplicado
 	var area := _get_spawn_rect(popup.size * popup.scale)
+
 
 	var target_pos: Vector2
 

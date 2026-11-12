@@ -14,6 +14,8 @@ const RECOVERY_SCENE: PackedScene = preload(
 @onready var game_over_screen: GameOverScreen = $GameOverScreen
 @onready var director: DifficultyDirector = $DifficultyDirector
 @onready var som_dano: AudioStreamPlayer = $DanoSom
+@onready var gameover_som: AudioStreamPlayer = $GameOverSom
+@onready var sixseven_som: AudioStreamPlayer = $SixSevenSom
 @onready var hud = $HUD
 @onready var tutorial: Tutorial = $Tutorial
 
@@ -51,6 +53,8 @@ func _ready() -> void:
 
 	som_dano.process_mode = Node.PROCESS_MODE_ALWAYS
 	manager_pop.som_dano.process_mode = Node.PROCESS_MODE_ALWAYS
+	sixseven_som.process_mode = Node.PROCESS_MODE_ALWAYS
+	gameover_som.process_mode = Node.PROCESS_MODE_ALWAYS
 
 	hud.recovery_requested.connect(_on_recovery_requested)
 
@@ -180,7 +184,7 @@ func _on_recovery_requested() -> void:
 	# Consome uma oportunidade
 	tentativas_acumuladas -= 1
 	hud.atualizar_tentativas(tentativas_acumuladas)
-
+	sixseven_som.play()
 	# Inicia com a dificuldade atual
 	recovery_challenge.call(
 		"iniciar_desafio",
@@ -209,7 +213,7 @@ func _on_desafio_finalizado(sucesso: bool) -> void:
 
 	if not is_inside_tree():
 		return
-
+	sixseven_som.stop()
 	recovery_challenge.hide()
 
 	get_tree().paused = false
@@ -246,7 +250,7 @@ func _on_dead() -> void:
 	get_tree().paused = true
 
 	var entry: Dictionary = PlayerData.submit_score()
-
+	gameover_som.play()
 	game_over_screen.show_results(
 		PlayerData.current_score,
 		entry
