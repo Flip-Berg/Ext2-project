@@ -14,13 +14,19 @@ const RECOVERY_SCENE: PackedScene = preload(
 @onready var game_over_screen: GameOverScreen = $GameOverScreen
 @onready var director: DifficultyDirector = $DifficultyDirector
 @onready var som_dano: AudioStreamPlayer = $DanoSom
+@onready var gameover_som: AudioStreamPlayer = $GameOverSom
+@onready var sixseven_som: AudioStreamPlayer = $SixSevenSom
 @onready var hud = $HUD
+@onready var tutorial: Tutorial = $Tutorial
 
 var consultas_corretas: int = 0
 var tentativas_acumuladas: int = 0
 var desafio_em_andamento: bool = false
 
 var recovery_challenge: Control
+
+## Fim de um desafio 6-7 (depois de o jogo voltar a rodar). O tutorial espera por ele.
+signal desafio_6_7_terminou(sucesso: bool)
 
 
 # ==========================================
@@ -38,19 +44,73 @@ func _ready() -> void:
 
 	pet.feeding_missed.connect(_on_pet_feeding_missed)
 
-	minigame.resposta_correta.connect(PlayerData.add_points)
-	minigame.resposta_correta.connect(_on_query_correta)
+	# Só o SQL dá pontos (ver SqlQuestion.points()); pop-ups e pet só tiram vidas.
+	# No tutorial as respostas não valem pontos nem contam para o 6-7.
+	minigame.resposta_correta.connect(_on_resposta_correta)
 	minigame.tempo_esgotado.connect(_on_sql_tempo_esgotado)
 
 	life_manager.dead.connect(_on_dead)
 
 	som_dano.process_mode = Node.PROCESS_MODE_ALWAYS
 	manager_pop.som_dano.process_mode = Node.PROCESS_MODE_ALWAYS
+	sixseven_som.process_mode = Node.PROCESS_MODE_ALWAYS
+	gameover_som.process_mode = Node.PROCESS_MODE_ALWAYS
 
 	hud.recovery_requested.connect(_on_recovery_requested)
 
 	_preparar_desafio()
 
+	hud.atualizar_tentativas(tentativas_acumuladas)
+
+	if PlayerData.needs_tutorial():
+		_preparar_tutorial()
+	# Sem tutorial, o minigame começa sozinho (automatico já vem ligado).
+
+
+# ==========================================
+# TUTORIAL
+# ==========================================
+
+## Tutorial: sem tempo, sem pop-ups sozinhos, pet dormindo e sem perder vidas.
+## O minigame espera as perguntas do tutorial em vez de sortear.
+func _preparar_tutorial() -> void:
+	minigame.automatico = false
+	minigame.sem_tempo = true
+	manager_pop.set_active(false)
+	pet.stop()
+	life_manager.invulnerable = true
+	tutorial.finished.connect(_comecar_partida)
+	tutorial.start.call_deferred(minigame, manager_pop, pet, self)
+
+
+## Fim do tutorial: começa a partida valendo, do zero.
+func _comecar_partida() -> void:
+	life_manager.invulnerable = false
+	minigame.sem_tempo = false
+	minigame.automatico = true
+	minigame.esconder_dica()
+	manager_pop.set_active(true)
+	pet.resume()
+	director.elapsed = 0.0
+	PlayerData.start_run()
+	# A vida ganha no treino do 6-7 não vale para a partida.
+	life_manager.reset_lives()
+	consultas_corretas = 0
+	tentativas_acumuladas = 0
+	hud.atualizar_tentativas(tentativas_acumuladas)
+	minigame.nova_query()
+
+
+func _on_resposta_correta(pontos: int) -> void:
+	if tutorial.running:
+		return
+	PlayerData.add_points(pontos)
+	_on_query_correta(pontos)
+
+
+## Dá uma oportunidade 6-7 sem precisar das 5 respostas (treino do tutorial).
+func ganhar_tentativa() -> void:
+	tentativas_acumuladas += 1
 	hud.atualizar_tentativas(tentativas_acumuladas)
 
 
@@ -124,7 +184,7 @@ func _on_recovery_requested() -> void:
 	# Consome uma oportunidade
 	tentativas_acumuladas -= 1
 	hud.atualizar_tentativas(tentativas_acumuladas)
-
+	sixseven_som.play()
 	# Inicia com a dificuldade atual
 	recovery_challenge.call(
 		"iniciar_desafio",
@@ -153,7 +213,7 @@ func _on_desafio_finalizado(sucesso: bool) -> void:
 
 	if not is_inside_tree():
 		return
-
+	sixseven_som.stop()
 	recovery_challenge.hide()
 
 	get_tree().paused = false
@@ -164,6 +224,8 @@ func _on_desafio_finalizado(sucesso: bool) -> void:
 
 	if campo != null:
 		campo.call_deferred("grab_focus")
+
+	desafio_6_7_terminou.emit(sucesso)
 
 
 # ==========================================
@@ -188,7 +250,7 @@ func _on_dead() -> void:
 	get_tree().paused = true
 
 	var entry: Dictionary = PlayerData.submit_score()
-
+	gameover_som.play()
 	game_over_screen.show_results(
 		PlayerData.current_score,
 		entry

@@ -6,18 +6,15 @@ signal closed_by_player
 
 @export var lifetime = 5.0
 
-@export var popup_images: Array[Texture2D]
-@export var popup_grid: Array[Texture2D]
 
-@onready var random_image: TextureRect= $RandomImage
-@onready var random_grid: TextureRect= $RandomGrid
+@export var popup_images: Array[Texture2D]
+
 @onready var som_fecha: AudioStreamPlayer = $FechamentoSom
 
 var lifetime_timer: Timer
 var closed: bool=false
 
 func _ready() -> void:
-	_random_grid()
 	_random_image()
 	_time()
 	
@@ -35,12 +32,9 @@ func _time() -> void:
 func _random_image()->void:
 	if popup_images.is_empty():
 		return
-	random_image.texture= popup_images.pick_random()
-
-func _random_grid()->void:
-	if popup_grid.is_empty():
-		return
-	random_grid.texture= popup_grid.pick_random()
+	var tex: Texture2D = popup_images.pick_random()
+	texture = tex
+	size = tex.get_size()
 	
 func close() -> void:
 	if closed:
@@ -51,8 +45,7 @@ func close() -> void:
 	
 	if lifetime_timer!=null:
 		lifetime_timer.stop()
-	# Esconde o pop-up (e para de receber cliques) e só libera o nó depois
-	# que o som terminar; o player é filho do pop-up e seria cortado.
+
 	hide()
 	som_fecha.play()
 	await som_fecha.finished
@@ -64,5 +57,7 @@ func _on_lifetime_timeout()-> void:
 	closed=true
 	
 	expired.emit()
-	
+	hide()
+	som_fecha.play()
+	await som_fecha.finished
 	queue_free()

@@ -5,7 +5,7 @@ const GAME_SCENE: String = "res://game/GameScene.tscn"
 @onready var name_input: LineEdit = $Janela/LineEdit
 @onready var high_score_label: Label = $Janela/HighScoreLabel
 ## As carinhas do Login.png, na ordem: fácil, médio, difícil.
-@onready var difficulty_buttons: Array[Button] = [$Janela/FacilButton, $Janela/MedioButton, $Janela/DificilButton]
+@onready var difficulty_buttons: Array[BaseButton] = [$Janela/FacilButton, $Janela/MedioButton, $Janela/DificilButton]
 
 func _ready() -> void:
 	# Carrega o nome e recorde salvos anteriormente

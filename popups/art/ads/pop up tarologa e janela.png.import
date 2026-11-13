@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nbaie1v4wt31"
-path="res://.godot/imported/box-roxo-620x243.png-1ace482d27b921c44dc156d88a18092a.ctex"
+uid="uid://clvj2awytspdo"
+path="res://.godot/imported/pop up tarologa e janela.png-5b02f3779f5e0ee4ab88498e961d378c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://popups/art/frames/box-roxo-620x243.png"
-dest_files=["res://.godot/imported/box-roxo-620x243.png-1ace482d27b921c44dc156d88a18092a.ctex"]
+source_file="res://popups/art/ads/pop up tarologa e janela.png"
+dest_files=["res://.godot/imported/pop up tarologa e janela.png-5b02f3779f5e0ee4ab88498e961d378c.ctex"]
 
 [params]
 

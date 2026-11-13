@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2kbb5mo1fe2p"
-path="res://.godot/imported/box-ciano-620x243.png-fe8ac1e97446b8788330869e72cfd4e1.ctex"
+uid="uid://dqlh2obr5uehf"
+path="res://.godot/imported/pop up delicias e gostosas e janela.png-26e726cf0dac54e77d57dbf527e5a6d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://popups/art/frames/box-ciano-620x243.png"
-dest_files=["res://.godot/imported/box-ciano-620x243.png-fe8ac1e97446b8788330869e72cfd4e1.ctex"]
+source_file="res://popups/art/ads/pop up delicias e gostosas e janela.png"
+dest_files=["res://.godot/imported/pop up delicias e gostosas e janela.png-26e726cf0dac54e77d57dbf527e5a6d8.ctex"]
 
 [params]
 

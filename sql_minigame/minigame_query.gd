@@ -5,6 +5,10 @@ extends Control
 signal resposta_correta(pontos: int)
 signal tempo_esgotado
 signal _continuar  # fim da revelação da resposta (tempo ou Enter)
+## Só com `automatico` desligado (tutorial): a pergunta foi respondida e o minigame
+## espera a próxima vir de fora, por perguntar().
+signal pergunta_concluida
+signal resposta_errada
 
 const PENALIDADE_ERRO: float = 3.0       # segundos perdidos por resposta errada
 const PAUSA_ACERTO: float = 0.65
@@ -31,9 +35,14 @@ const TIPOS_PT: Dictionary = {"number": "número", "text": "texto", "date": "dat
 @onready var fundo_feedback: ColorRect = $FundoFeedback
 @onready var label_feedback: Label = $LabelFeedback
 @onready var painel_schema: RichTextLabel = $RichTextLabel
+@onready var label_dica: RichTextLabel = $LabelDica
 
 ## Definido pela GameScene; sem ele o minigame fica na dificuldade inicial.
 var director: DifficultyDirector
+## Desligado, o minigame não sorteia perguntas: quem manda é o tutorial.
+var automatico: bool = true
+## Sem contagem de tempo (tutorial): a barra some e errar não tira segundos.
+var sem_tempo: bool = false
 
 var _rng := RandomNumberGenerator.new()
 var _tabelas: Array[SqlTable] = []
@@ -43,6 +52,7 @@ var _pergunta: SqlQuestion
 var _destaque := CodeHighlighter.new()
 
 var tempo_restante: float = 0.0
+var _tempo_total: float = 1.0
 var rodada_finalizada: bool = true
 var _revelando: bool = false
 
@@ -63,16 +73,25 @@ func _ready() -> void:
 	barra_tempo.max_value = 100.0
 
 	_configurar_entrada()
-	# Espera a GameScene definir o director antes da primeira pergunta.
-	nova_query.call_deferred()
+	esconder_dica()
+	# Espera a GameScene definir o director (ou desligar `automatico`) antes da
+	# primeira pergunta.
+	_iniciar.call_deferred()
+
+
+func _iniciar() -> void:
+	if automatico:
+		nova_query()
 
 
 func _process(delta: float) -> void:
 	if rodada_finalizada or _pergunta == null:
 		return
 	_manter_foco()
+	if sem_tempo:
+		return
 	tempo_restante = maxf(tempo_restante - delta, 0.0)
-	barra_tempo.value = tempo_restante / _pergunta.time_limit * 100.0
+	barra_tempo.value = tempo_restante / _tempo_total * 100.0
 	if tempo_restante <= 0.0:
 		_erro_por_tempo()
 
@@ -80,8 +99,14 @@ func _process(delta: float) -> void:
 func nova_query() -> void:
 	var orcamento := director.sql_budget() if director else 3
 	var modo: int = director.blank_mode() if director else SqlQuestion.Mode.KEYWORD
-	_pergunta = SqlQuestion.create(_gerador.generate(orcamento), modo, _rng)
+	perguntar(SqlQuestion.create(_gerador.generate(orcamento), modo, _rng))
+	if director:
+		director.long_question_active = _pergunta.is_long()
 
+
+## Mostra uma pergunta pronta (sorteada por nova_query ou montada pelo tutorial).
+func perguntar(pergunta: SqlQuestion) -> void:
+	_pergunta = pergunta
 	label_pseudocodigo.text = "-> " + _pergunta.prompt
 	if _pergunta.mode == SqlQuestion.Mode.FULL:
 		texto_objetivo.text = "Escreva a consulta completa."
@@ -95,11 +120,41 @@ func nova_query() -> void:
 	entrada_jogador.grab_focus()
 	_limpar_feedback()
 
-	tempo_restante = _pergunta.time_limit
+	_tempo_total = _pergunta.time_limit * (director.time_scale() if director else 1.0)
+	tempo_restante = _tempo_total
 	barra_tempo.value = 100.0
+	barra_tempo.visible = not sem_tempo
 	rodada_finalizada = false
-	if director:
-		director.long_question_active = _pergunta.is_long()
+
+
+## Pergunta montada à mão (tutorial). Ver SqlQuestion.with_answer().
+func pergunta_fixa(sql: String, resposta: String) -> SqlQuestion:
+	var resultado := _parser.parse(sql)
+	if not resultado.has("tree"):
+		push_error("SQL inválido: %s (%s)" % [sql, resultado.get("error", "")])
+		return null
+	return SqlQuestion.with_answer(resultado["tree"], resposta)
+
+
+## Tira a pergunta da tela (o tutorial usa enquanto ensina pop-ups e o pet).
+func limpar() -> void:
+	rodada_finalizada = true
+	_pergunta = null
+	label_pseudocodigo.text = ""
+	texto_objetivo.text = ""
+	entrada_jogador.text = ""
+	entrada_jogador.editable = false
+	_limpar_feedback()
+
+
+## Caixa de dica no pé do painel (BBCode), usada pelo tutorial.
+func mostrar_dica(bbcode: String) -> void:
+	label_dica.text = bbcode
+	label_dica.show()
+
+
+func esconder_dica() -> void:
+	label_dica.hide()
 
 
 func _enviar() -> void:
@@ -123,16 +178,24 @@ func _acertou() -> void:
 	_piscar_tela(Color.GREEN)
 	_mostrar_feedback("ACERTOU! +%d pts" % pontos, COR_ACERTO, 0.55)
 	await get_tree().create_timer(PAUSA_ACERTO, false).timeout
-	if is_inside_tree():
+	if not is_inside_tree():
+		return
+	if automatico:
 		nova_query()
+	else:
+		pergunta_concluida.emit()
 
 
 func _errou(mensagem: String) -> void:
 	# O texto fica no campo para o jogador corrigir.
-	tempo_restante = maxf(tempo_restante - PENALIDADE_ERRO, 0.0)
 	_piscar_tela(Color.RED)
-	_mostrar_feedback("ERROU! %s (-%ds)" % [mensagem, int(PENALIDADE_ERRO)], COR_ERRO, 2.5)
+	if sem_tempo:
+		_mostrar_feedback("ERROU! %s" % mensagem, COR_ERRO, 4.0)
+	else:
+		tempo_restante = maxf(tempo_restante - PENALIDADE_ERRO, 0.0)
+		_mostrar_feedback("ERROU! %s (-%ds)" % [mensagem, int(PENALIDADE_ERRO)], COR_ERRO, 2.5)
 	entrada_jogador.grab_focus()
+	resposta_errada.emit()
 
 
 func _erro_por_tempo() -> void:

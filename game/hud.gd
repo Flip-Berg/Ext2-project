@@ -21,6 +21,7 @@ var tentativas_mostradas: int = 0
 func _ready() -> void:
 	life_manager.life_lost.connect(_on_lives_changed)
 	life_manager.life_gained.connect(_on_lives_changed)
+	life_manager.lives_reset.connect(_on_lives_changed)
 
 	_update_lives(life_manager.current_lives)
 
